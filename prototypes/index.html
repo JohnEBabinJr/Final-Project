@@ -5,8 +5,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <!-- Bootstrap -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
         integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+    <!-- Font Awesome -->
+    <script src="https://kit.fontawesome.com/020c2ee992.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://kit-free.fontawesome.com/releases/latest/css/free.min.css" media="all">
+    <link rel="stylesheet" href="https://kit-free.fontawesome.com/releases/latest/css/free-v4-font-face.min.css"
+        media="all">
+    <link rel="stylesheet" href="https://kit-free.fontawesome.com/releases/latest/css/free-v4-shims.min.css"
+        media="all">
     <title>Landing Page</title>
 
 </head>
@@ -40,13 +49,24 @@
         background-color: #1DB954;
         border-radius: 8px;
     }
+
+    #disclaimer {
+        font-size: 9px;
+    }
+
+    @media (min-width: 375px) {
+        #app {
+            min-width: 350px;
+            padding-top: 10px;
+        }
+    }
 </style>
 
 <body>
     <div class="bg">
         <div class="container container-fluid text-center">
             <div class="row">
-                <div class="col col-xl-5 mx-auto bg-white" id="app">
+                <div class="col col-5 mx-auto bg-white" id="app">
                     <h1 class="display-4 text-center">Car-okee</h1>
                     <hr class="my-4">
                     <p class="lead text-center mx-3">Collaborate on the ultimate roadtrip playlist with your friends
@@ -65,9 +85,10 @@
 
                     </div>
                     <div class="container text-right mt-4">
-                        <a href="/">Github Link</a> |
+                        <a href="https://github.com/JohnEBabinJr/final-project/"><i class="fab fa-github fa-1x"></i></a>
+                        |
                         <a href="/about">About Us</a>
-                        <div class="text-muted">Disclaimer: We are not affiliated with Spotify.</div>
+                        <div class="text-muted" id="disclaimer">Disclaimer: We are not affiliated with Spotify.</div>
                     </div>
                 </div>
 
