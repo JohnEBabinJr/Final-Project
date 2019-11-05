@@ -8,7 +8,9 @@ export const redirectUri = "http://localhost:3000/redirect";
 export const scopes = [
   "user-top-read",
   "user-read-currently-playing",
-  "user-read-playback-state"
+  "user-read-playback-state",
+  "streaming",
+  "playlist-modify-public"
 ];
 
 //id("749b6ea423c24fef905f41108b8c3a3f");
