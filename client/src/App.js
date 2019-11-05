@@ -7,10 +7,11 @@ import {
   redirectUri,
   scopes
 } from "./config_example.js";
+// Important
+import "./App.css";
 import hash from "./hash";
 import Player from "./Player";
-import logo from "./logo.svg";
-import "./App.css";
+import logo from "./spotify-icon.png";
 
 class App extends Component {
   constructor() {
@@ -68,6 +69,31 @@ class App extends Component {
       <div className="App">
         <header className="App-header">
           <img src={logo} className="App-logo" alt="logo" />
+          {!this.state.token && (
+            <div class="container text-center bg-dark">
+              <div class="row">
+                <div class="col col-5 mx-auto" id="app">
+                  <p class="lead text-center mx-3">
+                    Collaborate on the ultimate roadtrip playlist with your
+                    friends using Spotify. Share the link, queue up songs, and
+                    export your unforgettable playlist.
+                  </p>
+                </div>
+              </div>
+
+              <div class="row text-center">
+                <div class="col">
+                  <a href="https://github.com/JohnEBabinJr/final-project/">
+                    <i class="fab fa-github fa-1x"></i>
+                  </a>{" "}
+                  |
+                  <a href="/about" class="ml-2">
+                    About Us
+                  </a>
+                </div>
+              </div>
+            </div>
+          )}
           {!this.state.token && (
             <a
               className="btn btn--loginApp-link"
