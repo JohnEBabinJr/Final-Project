@@ -1,3 +1,10 @@
+.App-logo {
+    animation: App-logo-spin infinite 20s linear;
+    height: 35vmin;
+    pointer-events: none;
+    display: hide;
+}
+
 /** Now Playing **/
 
 .now-playing__name {
