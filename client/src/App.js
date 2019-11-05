@@ -10,8 +10,8 @@ import {
 // Important
 import "./App.css";
 import hash from "./hash";
-import Player from "./Player";
 import logo from "./spotify-icon.png";
+import Player from "./Player";
 
 class App extends Component {
   constructor() {
@@ -65,31 +65,34 @@ class App extends Component {
   }
 
   render() {
+    const github = (
+      <a href="https://github.com/JohnEBabinJr/final-project/" class="mr-1">
+        <i class="fab fa-github fa-1x"></i>
+      </a>
+    );
+
+    const aboutUs = (
+      <a href="/about" class="ml-2">
+        About Us
+      </a>
+    );
     return (
+      // Put things that you want to appear on every page vvv
       <div className="App">
+        <div className="links">
+          {github} | {aboutUs}
+        </div>
         <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
           {!this.state.token && (
-            <div class="container text-center bg-dark">
+            <div class="container">
+              <img src={logo} className="App-logo" alt="logo" />
               <div class="row">
                 <div class="col col-5 mx-auto" id="app">
-                  <p class="lead text-center mx-3">
+                  <p class="lead mx-3">
                     Collaborate on the ultimate roadtrip playlist with your
                     friends using Spotify. Share the link, queue up songs, and
-                    export your unforgettable playlist.
+                    export your playlist to relive the memories.
                   </p>
-                </div>
-              </div>
-
-              <div class="row text-center">
-                <div class="col">
-                  <a href="https://github.com/JohnEBabinJr/final-project/">
-                    <i class="fab fa-github fa-1x"></i>
-                  </a>{" "}
-                  |
-                  <a href="/about" class="ml-2">
-                    About Us
-                  </a>
                 </div>
               </div>
             </div>
@@ -101,7 +104,7 @@ class App extends Component {
                 "%20"
               )}&response_type=token&show_dialog=true`}
             >
-              Login to Spotify
+              Login With Spotify
             </a>
           )}
           {this.state.token && (

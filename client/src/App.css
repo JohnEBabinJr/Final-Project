@@ -2,15 +2,21 @@
   text-align: center;
 }
 
+.links {
+  text-align: right;
+  margin-right: 10px;
+  font-size: calc(6px + 2vmin);
+}
+
 .App-logo {
   animation: App-logo-spin infinite 20s linear;
-  height: 40vmin;
+  height: 35vmin;
   pointer-events: none;
 }
 
 .App-header {
   background-color: #282c34;
-  min-height: 100vh;
+  min-height: 85vh;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -41,13 +47,14 @@
 
 html,
 body {
+
   height: 100%;
 }
 
 body {
-  background-color: #333;
+  background-color: #282c34;
   color: #eee;
-  font-family: Helvetica, Arial;
+  font-family: 'Lato', Helvetica, sans-serif;
   font-size: 3vmin;
 }
 
@@ -60,17 +67,16 @@ body {
 .btn {
   background-color: transparent;
   border-radius: 2em;
-  border: 0.2em solid #1ecd97;
-  color: #1ecd97;
+  border: 2px solid #1DB954;
+  color: #1DB954;
   cursor: pointer;
   font-size: 3vmin;
   padding: 0.7em 1.5em;
-  text-transform: uppercase;
   transition: all 0.25s ease;
 }
 
 .btn:hover {
-  background: #1ecd97;
+  background: #1DB954;
   color: #333;
 }
 
@@ -109,11 +115,12 @@ body {
 /* Typography */
 
 a {
+
   text-decoration: none;
   color: white;
 }
 
 a:hover {
   text-decoration: none;
-  color:
+  color: #1DB954;
 }
