@@ -45,7 +45,8 @@ class App extends Component {
       this.setState({
         token: _token
       });
-      this.getCurrentlyPlaying(_token);
+      //this.getCurrentlyPlaying(_token);
+      this.getSong(_token);
     }
   }
 
@@ -64,6 +65,20 @@ class App extends Component {
           is_playing: data.is_playing,
           progress_ms: data.progress_ms
         });
+      }
+    });
+  }
+
+  getSong(token) {
+    $.ajax({
+      url:
+        "https://api.spotify.com/v1/search?q=humble&type=track&artist=kendrick&offset=1&limit=1",
+      type: "GET",
+      beforeSend: xhr => {
+        xhr.setRequestHeader("Authorization", "Bearer " + token);
+      },
+      success: data => {
+        console.log("data", data);
       }
     });
   }
