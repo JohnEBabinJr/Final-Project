@@ -12,6 +12,10 @@ import Player from "./Player";
 import logo from "./logo.svg";
 import "./App.css";
 
+// Identify if host or guest
+// Full search
+// Playlist
+//
 class App extends Component {
   constructor() {
     super();
