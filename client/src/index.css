@@ -12,3 +12,38 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
+
+body,
+html {
+  height: 100%;
+}
+
+.bg-logo {
+  background-image: url("bg.jpg");
+  height: 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+#app {
+  margin-top: 50px;
+  padding-top: 50px;
+  padding-bottom: 30px;
+  border-radius: 10px;
+}
+
+#disclaimer {
+  font-size: 9px;
+}
+
+@media (min-width: 375px) {
+  #app {
+    min-width: 350px;
+    padding-top: 10px;
+  }
+}
+
+a {
+  text-decoration: none;
+}
