@@ -13,6 +13,10 @@ import hash from "./hash";
 import logo from "./spotify-icon.png";
 import Player from "./Player";
 
+// Identify if host or guest
+// Full search
+// Playlist
+//
 class App extends Component {
   constructor() {
     super();
