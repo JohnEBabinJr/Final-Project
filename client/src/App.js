@@ -3,15 +3,15 @@ import * as $ from "jquery";
 import {
   authEndpoint,
   clientId,
-  clientSecret,
+  //clientSecret,
   redirectUri,
   scopes
 } from "./config_example.js";
-// Important
 import "./App.css";
 import hash from "./hash";
 import logo from "./spotify-icon.png";
 import Player from "./Player";
+import API from "./utils/API";
 
 // Identify if host or guest
 // Full search
@@ -69,6 +69,18 @@ class App extends Component {
     });
   }
 
+  handleTrack = data => {
+    API.saveTrack({
+      roomId: 1,
+      trackId: data.tracks.items[0].id,
+      trackName: data.tracks.items[0].name,
+      artistName: data.tracks.items[0].artists[0].name,
+      albumName: data.tracks.items[0].album.name,
+      albumCover: data.tracks.items[0].album.images[1],
+      userName: "Connor"
+    }).then(res => console.log("result:" + res));
+  };
+
   getSong(token) {
     $.ajax({
       url:
@@ -85,6 +97,7 @@ class App extends Component {
           is_playing: data.is_playing,
           progress_ms: data.progress_ms
         });
+        this.handleTrack(data);
       }
     });
   }
