@@ -1,4 +1,4 @@
-const db = require("../models");
+const db = require("../models/track.js");
 
 //as of 11/5 @ 5:30pm, comments below outline what functions we will need, not what they are currently doing
 module.exports = {
@@ -17,7 +17,7 @@ module.exports = {
   },
   create: function(req, res) {
     //add track to playlist?
-    db.Track.create(req.body)
+    db.create(req.body)
       .then(dbModel => res.json(dbModel))
       .catch(err => res.status(422).json(err));
   },
