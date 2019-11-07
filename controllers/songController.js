@@ -1,28 +1,34 @@
 const db = require("../models");
 
+//as of 11/5 @ 5:30pm, comments below outline what functions we will need, not what they are currently doing
 module.exports = {
   findAll: function(req, res) {
+    //we will need a 'findAll by room id' to access specific rooms, which would actually be a 'findById', I think
     db.Track.find(req.query)
       .sort({ date: -1 })
       .then(dbModel => res.json(dbModel))
       .catch(err => res.status(422).json(err));
   },
   findById: function(req, res) {
+    //Might need a 'findById' to play next track to the player
     db.Track.findById(req.params.id)
       .then(dbModel => res.json(dbModel))
       .catch(err => res.status(422).json(err));
   },
   create: function(req, res) {
+    //add track to playlist?
     db.Track.create(req.body)
       .then(dbModel => res.json(dbModel))
       .catch(err => res.status(422).json(err));
   },
   update: function(req, res) {
+    //unsure if we'll need to update other than delete once tracks/playlists are stored
     db.Track.findOneAndUpdate({ _id: req.params.id }, req.body)
       .then(dbModel => res.json(dbModel))
       .catch(err => res.status(422).json(err));
   },
   remove: function(req, res) {
+    //remove track from playlist
     db.Track.findById({ _id: req.params.id })
       .then(dbModel => dbModel.remove())
       .then(dbModel => res.json(dbModel))

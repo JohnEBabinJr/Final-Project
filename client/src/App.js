@@ -72,13 +72,19 @@ class App extends Component {
   getSong(token) {
     $.ajax({
       url:
-        "https://api.spotify.com/v1/search?q=humble&type=track&artist=kendrick&offset=1&limit=1",
+        "https://api.spotify.com/v1/search?q=humble&type=track&offset=0&limit=1",
+      //"https://api.spotify.com/v1/search?q=humble&type=track&artist=kendrick&offset=0&limit=1",
       type: "GET",
       beforeSend: xhr => {
         xhr.setRequestHeader("Authorization", "Bearer " + token);
       },
       success: data => {
         console.log("data", data);
+        this.setState({
+          item: data.tracks.items[0],
+          is_playing: data.is_playing,
+          progress_ms: data.progress_ms
+        });
       }
     });
   }
@@ -95,10 +101,19 @@ class App extends Component {
         About Us
       </a>
     );
+
     return (
       // Put things that you want to appear on every page vvv
       <div className="App">
         <div className="links">
+          {this.state.token && (
+            <input //break out input into seperate component like in 11-stu_reactRouter
+              class="form-control frm"
+              type="text"
+              placeholder="Search"
+              aria-label="Search"
+            ></input>
+          )}
           {github} | {aboutUs}
         </div>
         <header className="App-header">
