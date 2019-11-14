@@ -21,6 +21,9 @@ class App extends Component {
   constructor() {
     super();
     this.state = {
+      tempTrack: "",
+      tempArtist: "",
+      tempAlbum: "",
       token: null,
       item: {
         album: {
@@ -44,8 +47,6 @@ class App extends Component {
         token: _token
       });
       //this.getCurrentlyPlaying(_token);
-      this.getSong(_token);
-      this.getStuffFromDB();
     }
   }
 
@@ -99,9 +100,56 @@ class App extends Component {
   }
 
   getSong(token) {
+    var query = "";
+    if (
+      this.state.tempTrack &&
+      this.state.tempArtist &&
+      this.state.tempAlbumn
+    ) {
+      query = `https://api.spotify.com/v1/search?q=${this.state.tempTrack}&type=track&artist=${this.state.tempArtist}&album=${this.state.tempAlbumn}&offset=0&limit=1`;
+    } else if (
+      this.state.tempTrack &&
+      this.state.tempArtist &&
+      !this.state.tempAlbumn
+    ) {
+      query = `https://api.spotify.com/v1/search?q=${this.state.tempTrack}&type=track&artist=${this.state.tempArtist}&offset=0&limit=1`;
+    } else if (
+      this.state.tempTrack &&
+      !this.state.tempArtist &&
+      this.state.tempAlbumn
+    ) {
+      query = `https://api.spotify.com/v1/search?q=${this.state.tempTrack}&type=track&album=${this.state.tempAlbumn}&offset=0&limit=1`;
+    } else if (
+      !this.state.tempTrack &&
+      this.state.tempArtist &&
+      this.state.tempAlbumn
+    ) {
+      query = `https://api.spotify.com/v1/search?type=track&artist=${this.state.tempArtist}&album=${this.state.tempAlbumn}&offset=0&limit=1`;
+    } else if (
+      this.state.tempTrack &&
+      !this.state.tempArtist &&
+      !this.state.tempAlbumn
+    ) {
+      query = `https://api.spotify.com/v1/search?q=${this.state.tempTrack}&type=track&offset=0&limit=1`;
+    } else if (
+      !this.state.tempTrack &&
+      this.state.tempArtist &&
+      !this.state.tempAlbumn
+    ) {
+      query = `https://api.spotify.com/v1/search?type=track&artist=${this.state.tempArtist}&offset=0&limit=1`;
+    } else if (
+      !this.state.tempTrack &&
+      !this.state.tempArtist &&
+      this.state.tempAlbumn
+    ) {
+      query = `https://api.spotify.com/v1/search?type=track&album=${this.state.tempAlbumn}&offset=0&limit=1`;
+    } else {
+      alert("Must enter at least one value!");
+    }
+
     $.ajax({
-      url:
-        "https://api.spotify.com/v1/search?q=humble&type=track&offset=0&limit=1",
+      url: query,
+      //"https://api.spotify.com/v1/search?q=humble&type=track&offset=0&limit=1",
       //"https://api.spotify.com/v1/search?q=humble&type=track&artist=kendrick&offset=0&limit=1",
       type: "GET",
       beforeSend: xhr => {
@@ -118,6 +166,24 @@ class App extends Component {
       }
     });
   }
+
+  handleInputChange = event => {
+    const { name, value } = event.target;
+    this.setState({
+      [name]: value
+    });
+  };
+
+  handleFormSubmit = event => {
+    // Preventing the default behavior of the form submit (which is to refresh the page)
+    event.preventDefault();
+    this.getSong(
+      this.state.tempTrack,
+      this.state.tempArtist,
+      this.state.tempAlbum
+    );
+    this.getStuffFromDB();
+  };
 
   render() {
     const github = (
@@ -136,17 +202,37 @@ class App extends Component {
       // Put things that you want to appear on every page vvv
       <div className="App">
         <div className="links">
-          {this.state.token && (
-            <input //break out input into seperate component like in 11-stu_reactRouter
-              class="form-control frm"
-              type="text"
-              placeholder="Search"
-              aria-label="Search"
-            ></input>
-          )}
           {github} | {aboutUs}
         </div>
         <header className="App-header">
+          {this.state.token && (
+            <form>
+              <p>Track: {this.state.tempTrack}</p>
+              <p>Artist: {this.state.tempArtist}</p>
+              <input
+                type="text"
+                placeholder="Track"
+                name="track"
+                value={this.state.tempTrack}
+                onChange={this.handleInputChange}
+              />
+              <input
+                type="text"
+                placeholder="Artist"
+                name="artist"
+                value={this.state.tempArtist}
+                onChange={this.handleInputChange}
+              />
+              <input
+                type="text"
+                placeholder="Album"
+                name="album"
+                value={this.state.tempAlbum}
+                onChange={this.handleInputChange}
+              />
+              <button onClick={this.handleFormSubmit}>Submit</button>
+            </form>
+          )}
           {!this.state.token && (
             <div class="container">
               <img src={logo} className="App-logo" alt="logo" />
