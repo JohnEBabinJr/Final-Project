@@ -101,48 +101,44 @@ class App extends Component {
 
   getSong(token) {
     var query = "";
-    if (
-      this.state.tempTrack &&
-      this.state.tempArtist &&
-      this.state.tempAlbumn
-    ) {
-      query = `https://api.spotify.com/v1/search?q=${this.state.tempTrack}&type=track&artist=${this.state.tempArtist}&album=${this.state.tempAlbumn}&offset=0&limit=1`;
+    if (this.state.tempTrack && this.state.tempArtist && this.state.tempAlbum) {
+      query = `https://api.spotify.com/v1/search?q=${this.state.tempTrack}&type=track&artist=${this.state.tempArtist}&album=${this.state.tempAlbum}&offset=0&limit=1`;
     } else if (
       this.state.tempTrack &&
       this.state.tempArtist &&
-      !this.state.tempAlbumn
+      !this.state.tempAlbum
     ) {
       query = `https://api.spotify.com/v1/search?q=${this.state.tempTrack}&type=track&artist=${this.state.tempArtist}&offset=0&limit=1`;
     } else if (
       this.state.tempTrack &&
       !this.state.tempArtist &&
-      this.state.tempAlbumn
+      this.state.tempAlbum
     ) {
-      query = `https://api.spotify.com/v1/search?q=${this.state.tempTrack}&type=track&album=${this.state.tempAlbumn}&offset=0&limit=1`;
+      query = `https://api.spotify.com/v1/search?q=${this.state.tempTrack}&type=track&album=${this.state.tempAlbum}&offset=0&limit=1`;
     } else if (
       !this.state.tempTrack &&
       this.state.tempArtist &&
-      this.state.tempAlbumn
+      this.state.tempAlbum
     ) {
-      query = `https://api.spotify.com/v1/search?type=track&artist=${this.state.tempArtist}&album=${this.state.tempAlbumn}&offset=0&limit=1`;
+      query = `https://api.spotify.com/v1/search?type=track&artist=${this.state.tempArtist}&album=${this.state.tempAlbum}&offset=0&limit=1`;
     } else if (
       this.state.tempTrack &&
       !this.state.tempArtist &&
-      !this.state.tempAlbumn
+      !this.state.tempAlbum
     ) {
       query = `https://api.spotify.com/v1/search?q=${this.state.tempTrack}&type=track&offset=0&limit=1`;
     } else if (
       !this.state.tempTrack &&
       this.state.tempArtist &&
-      !this.state.tempAlbumn
+      !this.state.tempAlbum
     ) {
       query = `https://api.spotify.com/v1/search?type=track&artist=${this.state.tempArtist}&offset=0&limit=1`;
     } else if (
       !this.state.tempTrack &&
       !this.state.tempArtist &&
-      this.state.tempAlbumn
+      this.state.tempAlbum
     ) {
-      query = `https://api.spotify.com/v1/search?type=track&album=${this.state.tempAlbumn}&offset=0&limit=1`;
+      query = `https://api.spotify.com/v1/search?type=track&album=${this.state.tempAlbum}&offset=0&limit=1`;
     } else {
       alert("Must enter at least one value!");
     }
@@ -177,11 +173,7 @@ class App extends Component {
   handleFormSubmit = event => {
     // Preventing the default behavior of the form submit (which is to refresh the page)
     event.preventDefault();
-    this.getSong(
-      this.state.tempTrack,
-      this.state.tempArtist,
-      this.state.tempAlbum
-    );
+    this.getSong(this.state.token);
     this.getStuffFromDB();
   };
 
@@ -207,26 +199,24 @@ class App extends Component {
         <header className="App-header">
           {this.state.token && (
             <form>
-              <p>Track: {this.state.tempTrack}</p>
-              <p>Artist: {this.state.tempArtist}</p>
               <input
                 type="text"
                 placeholder="Track"
-                name="track"
+                name="tempTrack"
                 value={this.state.tempTrack}
                 onChange={this.handleInputChange}
               />
               <input
                 type="text"
                 placeholder="Artist"
-                name="artist"
+                name="tempArtist"
                 value={this.state.tempArtist}
                 onChange={this.handleInputChange}
               />
               <input
                 type="text"
                 placeholder="Album"
-                name="album"
+                name="tempAlbum"
                 value={this.state.tempAlbum}
                 onChange={this.handleInputChange}
               />
