@@ -86,13 +86,14 @@ class App extends Component {
   }
 
   handleTrack(data) {
+    console.log("handletrack");
     API.saveTrack({
       roomId: 1,
       trackId: data.tracks.items[0].id,
       trackName: data.tracks.items[0].name,
       artistName: data.tracks.items[0].artists[0].name,
       albumName: data.tracks.items[0].album.name,
-      albumCover: data.tracks.items[0].album.images[1],
+      albumCover: data.tracks.items[0].album.images[1].url,
       userName: "Connor"
     }).then(res => console.log("result:" + res));
   }
