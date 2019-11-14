@@ -4,8 +4,8 @@ const db = require("../models/track.js");
 module.exports = {
   findAll: function(req, res) {
     //we will need a 'findAll by room id' to access specific rooms, which would actually be a 'findById', I think
-    db.Track.find(req.query)
-      .sort({ date: -1 })
+    db.find(req.query)
+      //.sort({ date: -1 })
       .then(dbModel => res.json(dbModel))
       .catch(err => res.status(422).json(err));
   },

@@ -6,15 +6,17 @@ export default {
     return axios.get("/api/google", { params: { q: "title:" + q } });
   },
   // Gets all saved books
-  getSavedBooks: function() {
-    return axios.get("/api/books");
+  getSavedTracks: function() {
+    return axios.get("/api/tracks");
   },
   // Deletes the saved book with the given id
-  deleteBook: function(id) {
-    return axios.delete("/api/books/" + id);
+  deleteTracks: function(id) {
+    return axios.delete("/api/tracks/" + id);
   },
   // Saves an book to the database
   saveTrack: function(trackData) {
-    return axios.post("/api/tracks", trackData);
+    return axios.post("/api/tracks", trackData); //change /api/tracks to /3001 to bypass proxy
   }
 };
+
+//instead of api/tracks, use /room/:roomId and then /room/:roomId/api/:trackId
