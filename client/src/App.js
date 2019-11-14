@@ -37,18 +37,34 @@ class App extends Component {
   }
 
   componentDidMount() {
-    // Set token
+    //Set token
     let _token = hash.access_token;
-
     if (_token) {
-      // Set token
       this.setState({
         token: _token
       });
       //this.getCurrentlyPlaying(_token);
       this.getSong(_token);
+      this.getStuffFromDB();
     }
   }
+
+  getStuffFromDB = () => {
+    //API.getSavedTracks().then(res => console.log(res));
+    $.ajax({
+      url: "/api/tracks",
+      type: "GET",
+      contentType: "application/json; charset=utf-8",
+      success: data => {
+        console.log("data", data);
+        // this.setState({
+        //   item: data.item,
+        //   is_playing: data.is_playing,
+        //   progress_ms: data.progress_ms
+        //});
+      }
+    }).then(res => console.log("DB: " + res));
+  };
 
   getCurrentlyPlaying(token) {
     // Make a call using the token
@@ -69,17 +85,18 @@ class App extends Component {
     });
   }
 
-  handleTrack = data => {
+  handleTrack(data) {
+    console.log("handletrack");
     API.saveTrack({
       roomId: 1,
       trackId: data.tracks.items[0].id,
       trackName: data.tracks.items[0].name,
       artistName: data.tracks.items[0].artists[0].name,
       albumName: data.tracks.items[0].album.name,
-      albumCover: data.tracks.items[0].album.images[1],
+      albumCover: data.tracks.items[0].album.images[1].url,
       userName: "Connor"
     }).then(res => console.log("result:" + res));
-  };
+  }
 
   getSong(token) {
     $.ajax({

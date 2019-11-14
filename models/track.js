@@ -4,7 +4,7 @@ const Schema = mongoose.Schema;
 
 const spotifySchema = new Schema({
   roomId: { type: String, required: true },
-  trackId: { type: Number, required: true },
+  trackId: { type: String, required: true },
   trackName: { type: String, required: true },
   artistName: { type: String, required: true },
   albumName: { type: String, required: true },

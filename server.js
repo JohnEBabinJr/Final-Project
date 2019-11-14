@@ -7,6 +7,9 @@ const autoIncrement = require("mongoose-auto-increment");
 
 const routes = require("./routes");
 
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
+
 app.use(routes);
 
 // Serve up static assets (usually on heroku)
