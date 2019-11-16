@@ -3,11 +3,16 @@ import React from "react";
 function Playlist() {
   return (
     <div className="playlist">
-      <tr>
-        <th>Song Title</th>
-        <th>Artist</th>
-        <th>Albumn</th>
-      </tr>
+      <form>
+        <input
+          type="text"
+          placeholder="Album"
+          name="tempAlbum"
+          value={this.state.tempAlbum}
+          onChange={this.handleInputChange}
+        />
+        <button onClick={this.handleFormSubmit}>Submit</button>
+      </form>
     </div>
   );
 }

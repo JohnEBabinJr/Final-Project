@@ -17,7 +17,9 @@ import "./App.css";
 import hash from "./hash";
 import logo from "./spotify-icon.png";
 import Player from "./Player";
+import Room from "./Room";
 import API from "./utils/API";
+import ReactDOM from "react-dom";
 
 // Identify if host or guest
 // Full search
@@ -214,9 +216,25 @@ class App extends Component {
       </a>
     );
 
+    const homebutton = {
+      float: "left",
+      marginLeft: "10px"
+    };
+
+    const home = (
+      <a href="/">
+        <i class="fas fa-home"></i>
+      </a>
+    );
+
+    const props = {};
+
     return (
       // Put things that you want to appear on every page vvv
       <div className="App">
+        <div className="home">
+          <a style={homebutton}>{home}</a>
+        </div>
         <div className="links">
           {github} | {aboutUs}
         </div>
@@ -261,6 +279,7 @@ class App extends Component {
               </div>
             </div>
           )}
+
           {!this.state.token && (
             <a
               className="btn btn--loginApp-link"
@@ -281,6 +300,9 @@ class App extends Component {
               Guest
             </a>
           )}
+          {/* Room */}
+          {this.state.token && <Room />}
+          {/* Player */}
           {this.state.token && (
             <Player
               item={this.state.item}
