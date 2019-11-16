@@ -14,4 +14,12 @@ router
   .put(songController.update)
   .delete(songController.remove);
 
+// Matches with "/api/tracks/objectid/:id"
+// gets a single track
+router
+  .route("/objectid/:id")
+  .get(songController.findById)
+  .put(songController.update)
+  .delete(songController.remove);
+
 module.exports = router;

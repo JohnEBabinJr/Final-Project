@@ -7,6 +7,12 @@ import {
   redirectUri,
   scopes
 } from "./config_example.js";
+import {
+  guestEndpoint,
+  guestId,
+  guestUri,
+  guestScopes
+} from "./guest_config.js";
 import "./App.css";
 import hash from "./hash";
 import logo from "./spotify-icon.png";
@@ -21,6 +27,8 @@ class App extends Component {
   constructor() {
     super();
     this.state = {
+      room: "",
+      username: "",
       tempTrack: "",
       tempArtist: "",
       tempAlbum: "",
@@ -47,14 +55,17 @@ class App extends Component {
         token: _token
       });
       //this.getCurrentlyPlaying(_token);
+
       this.getStuffFromDB();
     }
   }
 
   getStuffFromDB = () => {
     API.getTracks({}).then(res => console.log("DB: " + res));
-    API.getTracksById("5dccc5c69ff432534eb5157c").then(res => console.log(res));
-    API.getTracksByRoomId({}).then(res => console.log(res));
+    API.getTracksById("/objectid/5dccc5c69ff432534eb5157c").then(res =>
+      console.log(res)
+    );
+    API.getTracksByRoomId("1").then(res => console.log(res));
   };
 
   getCurrentlyPlaying(token) {
@@ -140,10 +151,34 @@ class App extends Component {
     });
   }
 
+  makeRoom = () => {
+    // var hashids = new Hashids("this is my salt"),
+    //   id = hashids.encode(1, 2, 3),
+    //   numbers = hashids.decode(id);
+    let roomId;
+    if (!this.state.room) {
+      var Arr = [];
+      function getRandomInt() {
+        return Math.floor(Math.random() * Math.floor(10));
+      }
+      for (var i = 0; i < 4; i++) {
+        Arr.push(getRandomInt());
+      }
+
+      roomId = Arr.join("");
+      console.log(roomId);
+      this.setState({ room: roomId });
+      return roomId;
+    } else {
+      roomId = this.state.room;
+      return roomId;
+    }
+  };
+
   handleTrack(data) {
     console.log("handletrack");
     API.saveTrack({
-      roomId: 2,
+      roomId: this.makeRoom(),
       trackId: data.tracks.items[0].id,
       trackName: data.tracks.items[0].name,
       artistName: data.tracks.items[0].artists[0].name,
@@ -233,7 +268,17 @@ class App extends Component {
                 "%20"
               )}&response_type=token&show_dialog=true`}
             >
-              Login With Spotify
+              Host
+            </a>
+          )}
+          {!this.state.token && (
+            <a
+              className="btn btn--loginApp-link"
+              href={`${guestEndpoint}?client_id=${guestId}&redirect_uri=${guestUri}&scope=${guestScopes.join(
+                "%20"
+              )}&response_type=token&show_dialog=true`}
+            >
+              Guest
             </a>
           )}
           {this.state.token && (

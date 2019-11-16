@@ -17,7 +17,7 @@ module.exports = {
   },
   findByRoomId: function(req, res) {
     //Might need a 'findById' to play next track to the player
-    db.findById(req.body)
+    db.find({ roomId: req.params.id })
       .then(dbModel => res.json(dbModel))
       .catch(err => res.status(422).json(err));
   },
