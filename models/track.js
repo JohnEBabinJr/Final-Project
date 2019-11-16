@@ -3,7 +3,7 @@ const autoIncrement = require("mongoose-auto-increment");
 const Schema = mongoose.Schema;
 
 const spotifySchema = new Schema({
-  roomId: { type: String, required: true },
+  roomId: { type: String, required: true, unique: true },
   trackId: { type: String, required: true },
   trackName: { type: String, required: true },
   artistName: { type: String, required: true },
