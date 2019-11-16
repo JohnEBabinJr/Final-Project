@@ -11,7 +11,13 @@ module.exports = {
   },
   findById: function(req, res) {
     //Might need a 'findById' to play next track to the player
-    db.Track.findById(req.params.id)
+    db.findById(req.params.id)
+      .then(dbModel => res.json(dbModel))
+      .catch(err => res.status(422).json(err));
+  },
+  findByRoomId: function(req, res) {
+    //Might need a 'findById' to play next track to the player
+    db.findById(req.body)
       .then(dbModel => res.json(dbModel))
       .catch(err => res.status(422).json(err));
   },
@@ -23,13 +29,13 @@ module.exports = {
   },
   update: function(req, res) {
     //unsure if we'll need to update other than delete once tracks/playlists are stored
-    db.Track.findOneAndUpdate({ _id: req.params.id }, req.body)
+    db.findOneAndUpdate({ _id: req.params.id }, req.body)
       .then(dbModel => res.json(dbModel))
       .catch(err => res.status(422).json(err));
   },
   remove: function(req, res) {
     //remove track from playlist
-    db.Track.findById({ _id: req.params.id })
+    db.findById({ _id: req.params.id })
       .then(dbModel => dbModel.remove())
       .then(dbModel => res.json(dbModel))
       .catch(err => res.status(422).json(err));

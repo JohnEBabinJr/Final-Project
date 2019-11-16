@@ -2,12 +2,19 @@ import axios from "axios";
 
 export default {
   // Gets books from the Google API
-  getTracks: function(q) {
-    return axios.get("/api/google", { params: { q: "title:" + q } });
-  },
+  // getTracks: function(q) {
+  //   return axios.get("/api/google", { params: { q: "title:" + q } });
+  // },
+
   // Gets all saved books
-  getSavedTracks: function() {
+  getTracks: function() {
     return axios.get("/api/tracks");
+  },
+  getTracksById: function(id) {
+    return axios.get("/api/tracks/" + id);
+  },
+  getTracksByRoomId: function(id) {
+    return axios.get("/api/tracks/" + id);
   },
   // Deletes the saved book with the given id
   deleteTracks: function(id) {

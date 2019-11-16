@@ -47,24 +47,14 @@ class App extends Component {
         token: _token
       });
       //this.getCurrentlyPlaying(_token);
+      this.getStuffFromDB();
     }
   }
 
   getStuffFromDB = () => {
-    //API.getSavedTracks().then(res => console.log(res));
-    $.ajax({
-      url: "/api/tracks",
-      type: "GET",
-      contentType: "application/json; charset=utf-8",
-      success: data => {
-        console.log("data", data);
-        // this.setState({
-        //   item: data.item,
-        //   is_playing: data.is_playing,
-        //   progress_ms: data.progress_ms
-        //});
-      }
-    }).then(res => console.log("DB: " + res));
+    API.getTracks({}).then(res => console.log("DB: " + res));
+    API.getTracksById("5dccc5c69ff432534eb5157c").then(res => console.log(res));
+    API.getTracksByRoomId({}).then(res => console.log(res));
   };
 
   getCurrentlyPlaying(token) {
@@ -84,19 +74,6 @@ class App extends Component {
         });
       }
     });
-  }
-
-  handleTrack(data) {
-    console.log("handletrack");
-    API.saveTrack({
-      roomId: 1,
-      trackId: data.tracks.items[0].id,
-      trackName: data.tracks.items[0].name,
-      artistName: data.tracks.items[0].artists[0].name,
-      albumName: data.tracks.items[0].album.name,
-      albumCover: data.tracks.items[0].album.images[1].url,
-      userName: "Connor"
-    }).then(res => console.log("result:" + res));
   }
 
   getSong(token) {
@@ -145,7 +122,7 @@ class App extends Component {
 
     $.ajax({
       url: query,
-      //"https://api.spotify.com/v1/search?q=humble&type=track&offset=0&limit=1",
+
       //"https://api.spotify.com/v1/search?q=humble&type=track&artist=kendrick&offset=0&limit=1",
       type: "GET",
       beforeSend: xhr => {
@@ -163,6 +140,19 @@ class App extends Component {
     });
   }
 
+  handleTrack(data) {
+    console.log("handletrack");
+    API.saveTrack({
+      roomId: 2,
+      trackId: data.tracks.items[0].id,
+      trackName: data.tracks.items[0].name,
+      artistName: data.tracks.items[0].artists[0].name,
+      albumName: data.tracks.items[0].album.name,
+      albumCover: data.tracks.items[0].album.images[1].url,
+      userName: "Connor"
+    }).then(res => console.log("result:" + res));
+  }
+
   handleInputChange = event => {
     const { name, value } = event.target;
     this.setState({
@@ -174,7 +164,6 @@ class App extends Component {
     // Preventing the default behavior of the form submit (which is to refresh the page)
     event.preventDefault();
     this.getSong(this.state.token);
-    this.getStuffFromDB();
   };
 
   render() {
