@@ -116,9 +116,20 @@ body {
 a {
   text-decoration: none;
   color: white;
+
 }
 
 a:hover {
   text-decoration: none;
   color: #1DB954;
+}
+
+#buttonContainer {
+  width: 50%
+}
+
+#hostbutton,
+#guestbutton {
+  font-size: 1.5vw;
+  padding: 10px 50px;
 }

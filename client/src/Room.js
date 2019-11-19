@@ -29,7 +29,7 @@ class Room extends React.Component {
   render() {
     return (
       <div>
-        <Button onClick={this.openModal}>create ur room</Button>
+        <Button onClick={this.openModal}>Create New Room</Button>
         <Modal
           isOpen={this.state.modalIsOpen}
           onAfterOpen={this.afterOpenModal}
@@ -48,13 +48,7 @@ class Room extends React.Component {
                 <label for="nickname" class="sr-only">
                   nickname
                 </label>
-                <input
-                  type="text"
-                  readonly
-                  class="form-control-plaintext"
-                  id="nickname"
-                  value="email@example.com"
-                />
+                <input type="text" id="nickname" value="Nickname" />
               </div>
 
               <button
