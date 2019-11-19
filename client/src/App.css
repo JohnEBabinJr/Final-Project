@@ -111,6 +111,16 @@ body {
   flex: 1;
 }
 
+
+#buttonContainer {
+  width: 50%
+}
+
+.userButton {
+  font-size: 1.5vw;
+  padding: 10px 50px;
+}
+
 /* Typography */
 
 a {
@@ -124,11 +134,8 @@ a:hover {
   color: #1DB954;
 }
 
-#buttonContainer {
-  width: 50%
-}
-
-.userButton {
-  font-size: 1.5vw;
-  padding: 10px 50px;
+h1 {
+  font-size: 4vw;
+  font-family: 'Baloo';
+  letter-spacing: -3px;
 }

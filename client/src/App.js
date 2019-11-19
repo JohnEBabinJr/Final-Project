@@ -258,6 +258,7 @@ class App extends Component {
               <img src={logo} className="App-logo" alt="logo" />
               <div class="row">
                 <div class="col col-5 mx-auto" id="app">
+                  <h1>Car-oling</h1>
                   <p class="lead mx-3">
                     Collaborate on the ultimate roadtrip playlist with your
                     friends using Spotify. Share the link, queue up songs, and
@@ -267,37 +268,34 @@ class App extends Component {
               </div>
             </div>
           )}
-<<<<<<< HEAD
           <div class="container" id="buttonContainer">
             <div class="row">
-              <div class="col" id="hostbutton">
-                {!this.state.token && <Host className="hostbutton" />}
+              <div class="col">
+                {" "}
+                {/* Host Login */}
+                {!this.state.token && (
+                  <Host
+                    room={this.state.room}
+                    handleInput={this.handleInputChange}
+                    handleSubmit={this.handleFormSubmit}
+                  />
+                )}
               </div>
-              <div class="col" id="guestbutton">
-                {!this.state.token && <Guest className="guestbutton" />}
+
+              <div class="col">
+                {" "}
+                {/* Guest Login */}
+                {!this.state.token && (
+                  <Guest
+                    room={this.state.room}
+                    handleInput={this.handleInputChange}
+                    handleSubmit={this.handleFormSubmit}
+                  />
+                )}
               </div>
             </div>
           </div>
-=======
-          {/* Host Login */}
-          {!this.state.token && (
-            <Host
-              room={this.state.room}
-              handleInput={this.handleInputChange}
-              handleSubmit={this.handleFormSubmit}
-            />
-          )}
 
-          {/* Guest Login */}
-          {!this.state.token && (
-            <Guest
-              room={this.state.room}
-              handleInput={this.handleInputChange}
-              handleSubmit={this.handleFormSubmit}
-            />
-          )}
-
->>>>>>> c53e198b2c183e2b8579c7607307412629d29581
           {/* Player */}
           {this.state.token && (
             <Player
