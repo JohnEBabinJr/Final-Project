@@ -128,8 +128,7 @@ a:hover {
   width: 50%
 }
 
-#hostbutton,
-#guestbutton {
+.userButton {
   font-size: 1.5vw;
   padding: 10px 50px;
 }

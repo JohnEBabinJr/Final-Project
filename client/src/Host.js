@@ -49,7 +49,9 @@ class Host extends React.Component {
   render() {
     return (
       <div>
-        <Button onClick={this.openModal}>Host</Button>
+        <Button className="userButton" onClick={this.openModal}>
+          New Room
+        </Button>
         <Modal
           isOpen={this.state.modalIsOpen}
           onAfterOpen={this.afterOpenModal}
@@ -62,27 +64,27 @@ class Host extends React.Component {
             <i class="fas fa-window-close"></i>
           </Button>
           <div className="content">
-            <p>Let's get you started. Enter a nickname for yourself.</p>
-            <form class="form-inline">
+            <p>
+              Let's get started with a new playlist. Enter a nickname for
+              yourself.
+            </p>
+            <form>
               <div class="form-group mb-2">
-                <label for="nickname" class="sr-only">
-                  nickname
-                </label>
                 <input
                   type="text"
-                  readonly
-                  class="form-control-plaintext"
                   name="nickname"
+                  placeholder="Nickname"
                   value={this.state.nickname}
                   onChange={this.handleInputChange}
                 />
                 <a
+                  id="goButton"
                   className="btn btn--loginApp-link"
                   href={`${authEndpoint}?client_id=${clientId}&redirect_uri=${redirectUri}&scope=${scopes.join(
                     "%20"
                   )}&response_type=token&show_dialog=true`}
                 >
-                  Login to Spotify
+                  Go
                 </a>
               </div>
             </form>

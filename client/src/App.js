@@ -280,45 +280,16 @@ class App extends Component {
               </div>
             </div>
           )}
-
-<<<<<<< Updated upstream
-          <div class="row" id="buttonContainer">
-            <div class="col">
-              {!this.state.token && (
-                <a
-                  id="hostbutton"
-                  className="btn btn--loginApp-link"
-                  href={`${authEndpoint}?client_id=${clientId}&redirect_uri=${redirectUri}&scope=${scopes.join(
-                    "%20"
-                  )}&response_type=token&show_dialog=true`}
-                >
-                  New Room
-                </a>
-              )}
-            </div>
-
-            <div class="col">
-              {!this.state.token && (
-                <a
-                  id="guestbutton"
-                  className="btn btn--loginApp-link"
-                  href={`${guestEndpoint}?client_id=${guestId}&redirect_uri=${guestUri}&scope=${guestScopes.join(
-                    "%20"
-                  )}&response_type=token&show_dialog=true`}
-                >
-                  Existing Room
-                </a>
-              )}
+          <div class="container" id="buttonContainer">
+            <div class="row">
+              <div class="col" id="hostbutton">
+                {!this.state.token && <Host className="hostbutton" />}
+              </div>
+              <div class="col" id="guestbutton">
+                {!this.state.token && <Guest className="guestbutton" />}
+              </div>
             </div>
           </div>
-          {/* Room */}
-          {this.state.token && <Room />}
-=======
-          {!this.state.token && <Host />}
-
-          {!this.state.token && <Guest />}
-
->>>>>>> Stashed changes
           {/* Player */}
           {this.state.token && (
             <Player
