@@ -51,7 +51,7 @@ class Guest extends React.Component {
     return (
       <div>
         <Button className="userButton" onClick={this.openModal}>
-          Existing Room
+          Join Room
         </Button>
         <Modal
           isOpen={this.state.modalIsOpen}
