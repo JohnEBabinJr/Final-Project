@@ -17,6 +17,7 @@ class App extends Component {
   constructor() {
     super();
     this.state = {
+      songArray: [],
       room: "",
       username: "",
       tempTrack: "",
@@ -131,14 +132,21 @@ class App extends Component {
       },
       success: data => {
         console.log("data", data);
-        this.setState({
-          item: data.tracks.items[0],
-          is_playing: data.is_playing,
-          progress_ms: data.progress_ms
-        });
+        // this.setState({
+        //   item: data.tracks.items[0],
+        //   is_playing: data.is_playing,
+        //   progress_ms: data.progress_ms
+        // });
         this.handleTrack(data);
       }
-    });
+    }).then(
+      API.getTracksByRoomId(this.state.room).then(res => {
+        this.setState({
+          songArray: res.data
+        });
+        console.log(this.state.songArray);
+      })
+    );
   }
 
   makeRoom = () => {

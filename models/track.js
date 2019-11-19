@@ -10,6 +10,7 @@ const spotifySchema = new Schema({
   albumName: { type: String, required: true },
   albumCover: { type: String, required: true },
   userName: { type: String, required: true },
+  played: { type: Boolean, required: true },
   date: { type: Date, default: Date.now }
 });
 
