@@ -2,12 +2,19 @@ import "./Room.css";
 import React from "react";
 import Modal from "react-modal";
 import Button from "react-bootstrap/Button";
+import {
+  authEndpoint,
+  clientId,
+  redirectUri,
+  scopes
+} from "./config_example.js";
 
-class Room extends React.Component {
+class Host extends React.Component {
   constructor() {
     super();
 
     this.state = {
+      nickname: "",
       modalIsOpen: false
     };
 
@@ -15,6 +22,19 @@ class Room extends React.Component {
     this.afterOpenModal = this.afterOpenModal.bind(this);
     this.closeModal = this.closeModal.bind(this);
   }
+
+  handleInputChange = event => {
+    const { name, value } = event.target;
+    this.setState({
+      [name]: value
+    });
+  };
+
+  handleFormSubmit = event => {
+    // Preventing the default behavior of the form submit (which is to refresh the page)
+    event.preventDefault();
+    this.getSong(this.state.token);
+  };
 
   openModal() {
     this.setState({ modalIsOpen: true });
@@ -29,7 +49,7 @@ class Room extends React.Component {
   render() {
     return (
       <div>
-        <Button onClick={this.openModal}>Create New Room</Button>
+        <Button onClick={this.openModal}>Host</Button>
         <Modal
           isOpen={this.state.modalIsOpen}
           onAfterOpen={this.afterOpenModal}
@@ -48,16 +68,23 @@ class Room extends React.Component {
                 <label for="nickname" class="sr-only">
                   nickname
                 </label>
-                <input type="text" id="nickname" value="Nickname" />
+                <input
+                  type="text"
+                  readonly
+                  class="form-control-plaintext"
+                  name="nickname"
+                  value={this.state.nickname}
+                  onChange={this.handleInputChange}
+                />
+                <a
+                  className="btn btn--loginApp-link"
+                  href={`${authEndpoint}?client_id=${clientId}&redirect_uri=${redirectUri}&scope=${scopes.join(
+                    "%20"
+                  )}&response_type=token&show_dialog=true`}
+                >
+                  Login to Spotify
+                </a>
               </div>
-
-              <button
-                type="submit"
-                class="btn btn-primary mb-2"
-                id="submitNickname"
-              >
-                <i class="fas fa-play-circle fa-1x"></i>
-              </button>
             </form>
           </div>
         </Modal>
@@ -85,4 +112,4 @@ class Room extends React.Component {
 //   </div>
 // </div>
 
-export default Room;
+export default Host;

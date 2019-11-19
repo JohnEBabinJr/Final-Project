@@ -15,4 +15,4 @@ function Room() {
   );
 }
 
-export default Playlist;
+export default Room;

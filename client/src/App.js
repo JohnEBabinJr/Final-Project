@@ -17,7 +17,8 @@ import "./App.css";
 import hash from "./hash";
 import logo from "./spotify-icon.png";
 import Player from "./Player";
-import Room from "./Room";
+import Host from "./Host";
+import Guest from "./Guest";
 import API from "./utils/API";
 import ReactDOM from "react-dom";
 
@@ -280,6 +281,7 @@ class App extends Component {
             </div>
           )}
 
+<<<<<<< Updated upstream
           <div class="row" id="buttonContainer">
             <div class="col">
               {!this.state.token && (
@@ -311,6 +313,12 @@ class App extends Component {
           </div>
           {/* Room */}
           {this.state.token && <Room />}
+=======
+          {!this.state.token && <Host />}
+
+          {!this.state.token && <Guest />}
+
+>>>>>>> Stashed changes
           {/* Player */}
           {this.state.token && (
             <Player
