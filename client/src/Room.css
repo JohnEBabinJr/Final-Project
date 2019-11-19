@@ -1,0 +1,77 @@
+.Modal {
+    position: absolute;
+    top: 150px;
+    left: 150px;
+    right: 150px;
+    bottom: 150px;
+    background-color: #333;
+    ;
+}
+
+.Overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: transparent;
+}
+
+.content {
+    margin: 125px 250px auto;
+
+}
+
+#close {
+    align-content: flex-start;
+    float: right;
+    border: none;
+    color: white;
+}
+
+#close:hover {
+    background: none;
+    color: #1DB954;
+}
+
+#submitNickname {
+    border: none;
+    border: 2px solid #1DB954;
+    color: #1DB954;
+    margin-left: 30px;
+    padding: 12px 50px;
+    margin: 10px;
+}
+
+#submitNickname:hover {
+    background: #1DB954;
+    color: #333;
+}
+
+#nickname {
+    background: white;
+    border-radius: 5px;
+    padding: 10px;
+}
+
+.form-control-plaintext {
+    padding: 5px;
+    background-color: white;
+    margin-bottom: 15px;
+    margin-right: 100px;
+}
+
+#goButton {
+    font-size: 1.5vw;
+    padding: 10px 50px;
+    margin: 10px;
+    align-content: center;
+}
+
+h4 {
+    margin-bottom: 30px;
+}
+
+#formGroup {
+    margin-right: 30px;
+}
