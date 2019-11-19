@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import * as $ from "jquery";
-
 import "./App.css";
 import hash from "./hash";
 import logo from "./spotify-icon.png";
@@ -268,9 +267,23 @@ class App extends Component {
               </div>
             </div>
           )}
+          {/* Host Login */}
+          {!this.state.token && (
+            <Host
+              room={this.state.room}
+              handleInput={this.handleInputChange}
+              handleSubmit={this.handleFormSubmit}
+            />
+          )}
 
-          {!this.state.token && <Host />}
-          {!this.state.token && <Guest />}
+          {/* Guest Login */}
+          {!this.state.token && (
+            <Guest
+              room={this.state.room}
+              handleInput={this.handleInputChange}
+              handleSubmit={this.handleFormSubmit}
+            />
+          )}
 
           {/* Player */}
           {this.state.token && (
