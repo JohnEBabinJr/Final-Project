@@ -267,6 +267,18 @@ class App extends Component {
               </div>
             </div>
           )}
+<<<<<<< HEAD
+          <div class="container" id="buttonContainer">
+            <div class="row">
+              <div class="col" id="hostbutton">
+                {!this.state.token && <Host className="hostbutton" />}
+              </div>
+              <div class="col" id="guestbutton">
+                {!this.state.token && <Guest className="guestbutton" />}
+              </div>
+            </div>
+          </div>
+=======
           {/* Host Login */}
           {!this.state.token && (
             <Host
@@ -285,6 +297,7 @@ class App extends Component {
             />
           )}
 
+>>>>>>> c53e198b2c183e2b8579c7607307412629d29581
           {/* Player */}
           {this.state.token && (
             <Player

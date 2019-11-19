@@ -50,7 +50,9 @@ class Guest extends React.Component {
   render() {
     return (
       <div>
-        <Button onClick={this.openModal}>Guest</Button>
+        <Button className="userButton" onClick={this.openModal}>
+          Existing Room
+        </Button>
         <Modal
           isOpen={this.state.modalIsOpen}
           onAfterOpen={this.afterOpenModal}
@@ -63,37 +65,43 @@ class Guest extends React.Component {
             <i class="fas fa-window-close"></i>
           </Button>
           <div className="content">
-            <p>Let's get you started. Enter a nickname for yourself.</p>
-            <form class="form-inline">
-              <div class="form-group mb-2">
-                <label for="nickname" class="sr-only">
-                  nickname
-                </label>
+            <h4>
+              Ready to join a room? Enter a nickname for yourself and the Room
+              ID.
+            </h4>
+
+            <form class="form-inline" id="guestForm">
+              <div class="form-group mb-2" id="formGroup">
                 <input
                   type="text"
-                  readonly
-                  class="form-control-plaintext"
                   name="nickname"
+                  placeholder="Nickname"
                   value={this.state.nickname}
                   onChange={this.handleInputChange}
                 />
+              </div>
+              <div class="form-group mb-2" id="formGroup">
                 <input
                   type="text"
-                  readonly
-                  class="form-control-plaintext"
                   name="roomId"
+                  placeholder="Room Code"
                   value={this.state.roomId}
                   onChange={this.handleInputChange}
                 />
-                <a
-                  className="btn btn--loginApp-link"
-                  href={`${guestEndpoint}?client_id=${guestId}&redirect_uri=${guestUri}&scope=${guestScopes.join(
-                    "%20"
-                  )}&response_type=token&show_dialog=true`}
-                >
-                  Guest
-                </a>
+                <small id="roomidhelp" class="form-text text-muted pl-3">
+                  i.e. 1234
+                </small>
               </div>
+
+              <a
+                id="goButton"
+                className="btn btn--loginApp-link"
+                href={`${guestEndpoint}?client_id=${guestId}&redirect_uri=${guestUri}&scope=${guestScopes.join(
+                  "%20"
+                )}&response_type=token&show_dialog=true`}
+              >
+                Go
+              </a>
             </form>
           </div>
         </Modal>
