@@ -1,18 +1,5 @@
 import React, { Component } from "react";
 import * as $ from "jquery";
-import {
-  authEndpoint,
-  clientId,
-  //clientSecret,
-  redirectUri,
-  scopes
-} from "./config_example.js";
-import {
-  guestEndpoint,
-  guestId,
-  guestUri,
-  guestScopes
-} from "./guest_config.js";
 import "./App.css";
 import hash from "./hash";
 import logo from "./spotify-icon.png";
@@ -280,6 +267,7 @@ class App extends Component {
               </div>
             </div>
           )}
+<<<<<<< HEAD
           <div class="container" id="buttonContainer">
             <div class="row">
               <div class="col" id="hostbutton">
@@ -290,6 +278,26 @@ class App extends Component {
               </div>
             </div>
           </div>
+=======
+          {/* Host Login */}
+          {!this.state.token && (
+            <Host
+              room={this.state.room}
+              handleInput={this.handleInputChange}
+              handleSubmit={this.handleFormSubmit}
+            />
+          )}
+
+          {/* Guest Login */}
+          {!this.state.token && (
+            <Guest
+              room={this.state.room}
+              handleInput={this.handleInputChange}
+              handleSubmit={this.handleFormSubmit}
+            />
+          )}
+
+>>>>>>> c53e198b2c183e2b8579c7607307412629d29581
           {/* Player */}
           {this.state.token && (
             <Player
