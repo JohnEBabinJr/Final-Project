@@ -4,6 +4,7 @@ import "./App.css";
 import hash from "./hash";
 import logo from "./spotify-icon.png";
 import Player from "./Player";
+import Playlist from "./components/Playlist/index";
 import Host from "./Host";
 import Guest from "./Guest";
 import API from "./utils/API";
@@ -52,10 +53,6 @@ class App extends Component {
   }
 
   getStuffFromDB = () => {
-    API.getTracks({}).then(res => console.log("DB: " + res));
-    API.getTracksById("/objectid/5dccc5c69ff432534eb5157c").then(res =>
-      console.log(res)
-    );
     API.getTracksByRoomId("1").then(res => console.log(res));
   };
 
@@ -312,6 +309,10 @@ class App extends Component {
               progress_ms={this.progress_ms}
             />
           )}
+          <Playlist
+            currentRoom={this.state.room}
+            songs={this.state.songArray}
+          />
         </header>
       </div>
     );
