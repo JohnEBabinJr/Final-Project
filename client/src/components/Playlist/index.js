@@ -3,6 +3,12 @@ import React from "react";
 const Playlist = props => {
   return (
     <div>
+      <tr>
+        <th>Track</th>
+        <th>Artist</th>
+        <th>Album</th>
+        <th>Added By</th>
+      </tr>
       {props.songs.map(song => (
         <div>
           <tr>
