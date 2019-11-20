@@ -1,58 +1,31 @@
-// import React from "react";
-// import axios from "axios";
+import React from "react";
 
-// // const Playlist= props => {
-// //   API.getTracksByRoomId(props.currentRoom).then(function(res){
-// //     for (var i =0;i<res.length<i++)
-// //   return (
-// //     <div className="">
-// //       <table></table>
-// //     </div>
-// //   );
-// // }
+const Playlist = props => {
+  return (
+    <div>
+      <tr>
+        <th>Track</th>
+        <th>Artist</th>
+        <th>Album</th>
+        <th>Added By</th>
+      </tr>
+      {props.songs.map(song => (
+        <div>
+          <tr>
+            <td>{song.trackName}</td>
+            <td>{song.artistName}</td>
+            <td>{song.albumName}</td>
+            <td>{song.userName}</td>
+          </tr>
+        </div>
+      ))}
+    </div>
+  );
+};
 
-// let Playlist = props => {
-//   getTracksByRoomId: function(props.currentRoom) {
-//     return axios.get("/api/tracks/" + id);
-//   },
-
-//   return (
-//     <div>
-//       <select
-//         value={props.currentRoom}
-//         name="exp_year"
-//         className="form-control"
-//         onChange="this.handleInputChange"
-//       ></select>
-//     </div>
-//   );
-// };
-
-// render() {
-//   const options = [];
-
-//   for (let i = 2017; i <= 2050; i++) {
-//     options.push(<option value={i}>{i}</option>);
-//   }
-
-// return (
-//   <div>
-//     <select
-//       value={this.state.exp_year}
-//       name="exp_year"
-//       className="form-control"
-//       onChange="this.handleInputChange"
-//     >
-//       <option value="">===Select Expiry Year===</option>
-//       {options}
-//     </select>
-//   </div>
-// );
-
-// export default Playlist;
+export default Playlist;
 
 //TO DO
-// set songs to state and pass in here to turn into a prop
 // map the songs array and render them
 // set if styling statement to change based on if song is played
 // render out as a table
