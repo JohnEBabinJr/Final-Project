@@ -9,16 +9,7 @@ const Playlist = props => {
         <th>Album</th>
         <th>Added By</th>
       </tr>
-      {props.songs.map(song => (
-        <div>
-          <tr>
-            <td>{song.trackName}</td>
-            <td>{song.artistName}</td>
-            <td>{song.albumName}</td>
-            <td>{song.userName}</td>
-          </tr>
-        </div>
-      ))}
+      {props.children}
     </div>
   );
 };

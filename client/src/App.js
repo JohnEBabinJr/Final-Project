@@ -34,6 +34,7 @@ class App extends Component {
         duration_ms: 0
       },
       is_playing: "Paused",
+      nextToPlay: "",
       progress_ms: 0
     };
     this.getCurrentlyPlaying = this.getCurrentlyPlaying.bind(this);
@@ -47,13 +48,40 @@ class App extends Component {
         token: _token
       });
       //this.getCurrentlyPlaying(_token);
-
-      this.getStuffFromDB();
+      this.makeRoom();
+      setTimeout(this.getStuffFromDB, 1000);
     }
   }
+  makeRoom = () => {
+    // var hashids = new Hashids("this is my salt"),
+    //   id = hashids.encode(1, 2, 3),
+    //   numbers = hashids.decode(id);
+    let roomId;
+    if (!this.state.room) {
+      var Arr = [];
+      function getRandomInt() {
+        return Math.floor(Math.random() * Math.floor(10));
+      }
+      for (var i = 0; i < 4; i++) {
+        Arr.push(getRandomInt());
+      }
 
+      roomId = Arr.join("");
+      console.log(roomId);
+      this.setState({ room: roomId });
+      return roomId;
+    } else {
+      roomId = this.state.room;
+      return roomId;
+    }
+  };
   getStuffFromDB = () => {
-    API.getTracksByRoomId("1").then(res => console.log(res));
+    API.getTracksByRoomId(this.state.room).then(res => {
+      this.setState({
+        songArray: res.data
+      });
+      console.log(this.state.songArray);
+    });
   };
 
   getCurrentlyPlaying(token) {
@@ -129,47 +157,34 @@ class App extends Component {
       },
       success: data => {
         console.log("data", data);
-        // this.setState({
-        //   item: data.tracks.items[0],
-        //   is_playing: data.is_playing,
-        //   progress_ms: data.progress_ms
-        // });
-        this.handleTrack(data);
-      }
-    }).then(
-      API.getTracksByRoomId(this.state.room).then(res => {
-        this.setState({
-          songArray: res.data
+        API.saveTrack({
+          roomId: this.makeRoom(),
+          trackId: data.tracks.items[0].id,
+          trackName: data.tracks.items[0].name,
+          artistName: data.tracks.items[0].artists[0].name,
+          albumName: data.tracks.items[0].album.name,
+          albumCover: data.tracks.items[0].album.images[1].url,
+          userName: "Connor"
         });
-        console.log(this.state.songArray);
-      })
-    );
+      }
+    }).then(setTimeout(this.getStuffFromDB, 500));
   }
 
-  makeRoom = () => {
-    // var hashids = new Hashids("this is my salt"),
-    //   id = hashids.encode(1, 2, 3),
-    //   numbers = hashids.decode(id);
-    let roomId;
-    if (!this.state.room) {
-      var Arr = [];
-      function getRandomInt() {
-        return Math.floor(Math.random() * Math.floor(10));
-      }
-      for (var i = 0; i < 4; i++) {
-        Arr.push(getRandomInt());
-      }
+  setSong() {
+    alert("Hello!");
+  }
 
-      roomId = Arr.join("");
-      console.log(roomId);
-      this.setState({ room: roomId });
-      return roomId;
-    } else {
-      roomId = this.state.room;
-      return roomId;
-    }
-  };
+  // setPlaylist() {
+  //   //map songs up until current playing, then set all next song to be played to state
+  //   this.songArray.map(song => {
+  //     song.played = false;
+  //   });
+  //   this.songArray.trackId = this.state.is_playing;
+  // }
 
+  setCurrentPlayingSong(trackId) {
+    alert(trackId);
+  }
   handleTrack(data) {
     console.log("handletrack");
     API.saveTrack({
@@ -309,10 +324,23 @@ class App extends Component {
               progress_ms={this.progress_ms}
             />
           )}
-          <Playlist
-            currentRoom={this.state.room}
-            songs={this.state.songArray}
-          />
+          <Playlist>
+            {this.state.songArray.map(song => (
+              <div>
+                <tr>
+                  <td>{song.trackName}</td>
+                  <td>{song.artistName}</td>
+                  <td>{song.albumName}</td>
+                  <td>{song.userName}</td>
+                  <td>
+                    <button
+                      onClick={() => this.setCurrentPlayingSong(song.trackId)}
+                    ></button>
+                  </td>
+                </tr>
+              </div>
+            ))}
+          </Playlist>
         </header>
       </div>
     );
