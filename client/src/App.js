@@ -233,30 +233,39 @@ class App extends Component {
         </div>
         <header className="App-header">
           {this.state.token && (
-            <form>
-              <input
-                type="text"
-                placeholder="Track"
-                name="tempTrack"
-                value={this.state.tempTrack}
-                onChange={this.handleInputChange}
-              />
-              <input
-                type="text"
-                placeholder="Artist"
-                name="tempArtist"
-                value={this.state.tempArtist}
-                onChange={this.handleInputChange}
-              />
-              <input
-                type="text"
-                placeholder="Album"
-                name="tempAlbum"
-                value={this.state.tempAlbum}
-                onChange={this.handleInputChange}
-              />
-              <button onClick={this.handleFormSubmit}>Submit</button>
-            </form>
+            <div>
+              <h1>enter ur music info</h1>
+              <div class="container">
+                <div class="row">
+                  <div class="col">
+                    <form>
+                      <input
+                        type="text"
+                        placeholder="Track"
+                        name="tempTrack"
+                        value={this.state.tempTrack}
+                        onChange={this.handleInputChange}
+                      />
+                      <input
+                        type="text"
+                        placeholder="Artist"
+                        name="tempArtist"
+                        value={this.state.tempArtist}
+                        onChange={this.handleInputChange}
+                      />
+                      <input
+                        type="text"
+                        placeholder="Album"
+                        name="tempAlbum"
+                        value={this.state.tempAlbum}
+                        onChange={this.handleInputChange}
+                      />
+                      <button onClick={this.handleFormSubmit}>Submit</button>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
           )}
           {!this.state.token && (
             <div class="container">
@@ -302,13 +311,13 @@ class App extends Component {
           </div>
 
           {/* Player */}
-          {this.state.token && (
+          {/* {this.state.token && (
             <Player
               item={this.state.item}
               is_playing={this.state.is_playing}
               progress_ms={this.progress_ms}
             />
-          )}
+          )} */}
           <Playlist
             currentRoom={this.state.room}
             songs={this.state.songArray}
