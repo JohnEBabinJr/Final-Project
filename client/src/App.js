@@ -4,11 +4,13 @@ import "./App.css";
 import hash from "./hash";
 import logo from "./spotify-icon.png";
 import Player from "./Player";
+//import altPlayer from "./components/Player/index";
 import Playlist from "./components/Playlist/index";
 import Host from "./Host";
 import Guest from "./Guest";
 import API from "./utils/API";
 import ReactDOM from "react-dom";
+import SpotifyPlayer from "react-spotify-player";
 
 // Identify if host or guest
 // Full search
@@ -18,6 +20,7 @@ class App extends Component {
   constructor() {
     super();
     this.state = {
+      nickname: "",
       songArray: [],
       room: "",
       username: "",
@@ -47,9 +50,14 @@ class App extends Component {
       this.setState({
         token: _token
       });
+<<<<<<< Updated upstream
       //this.getCurrentlyPlaying(_token);
       this.makeRoom();
       setTimeout(this.getStuffFromDB, 1000);
+=======
+      this.makeRoom();
+      setTimeout(this.getStuffFromDB, 500);
+>>>>>>> Stashed changes
     }
   }
   makeRoom = () => {
@@ -164,10 +172,17 @@ class App extends Component {
           artistName: data.tracks.items[0].artists[0].name,
           albumName: data.tracks.items[0].album.name,
           albumCover: data.tracks.items[0].album.images[1].url,
+<<<<<<< Updated upstream
           userName: "Connor"
         });
       }
     }).then(setTimeout(this.getStuffFromDB, 500));
+=======
+          userName: this.state.nickname
+        });
+      }
+    }).then(setTimeout(this.getStuffFromDB, 1000));
+>>>>>>> Stashed changes
   }
 
   setSong() {
@@ -194,7 +209,7 @@ class App extends Component {
       artistName: data.tracks.items[0].artists[0].name,
       albumName: data.tracks.items[0].album.name,
       albumCover: data.tracks.items[0].album.images[1].url,
-      userName: "Connor"
+      userName: this.state.nickname
     }).then(res => console.log("result:" + res));
   }
 
@@ -278,7 +293,7 @@ class App extends Component {
               <img src={logo} className="App-logo" alt="logo" />
               <div class="row">
                 <div class="col col-5 mx-auto" id="app">
-                  <h1>Car-oling</h1>
+                  <h1>Car-OK</h1>
                   <p class="lead mx-3">
                     Collaborate on the ultimate roadtrip playlist with your
                     friends using Spotify. Share the link, queue up songs, and
@@ -297,7 +312,7 @@ class App extends Component {
                   <Host
                     room={this.state.room}
                     handleInput={this.handleInputChange}
-                    handleSubmit={this.handleFormSubmit}
+                    handleSubmit={this.getNickname}
                   />
                 )}
               </div>
@@ -317,13 +332,21 @@ class App extends Component {
           </div>
 
           {/* Player */}
-          {this.state.token && (
+          {/* {this.state.token && (
             <Player
+              token={this.state.token}
               item={this.state.item}
               is_playing={this.state.is_playing}
               progress_ms={this.progress_ms}
             />
+          )} */}
+          {this.state.token && (
+            <Playlist
+              currentRoom={this.state.room}
+              songs={this.state.songArray}
+            />
           )}
+<<<<<<< Updated upstream
           <Playlist>
             {this.state.songArray.map(song => (
               <div>
@@ -341,6 +364,14 @@ class App extends Component {
               </div>
             ))}
           </Playlist>
+=======
+          {/* <altPlayer></altPlayer> */}
+
+          {/* <SpotifyPlayer
+            uri="spotify:album:1TIUsv8qmYLpBEhvmBmyBk"
+           
+          /> */}
+>>>>>>> Stashed changes
         </header>
       </div>
     );

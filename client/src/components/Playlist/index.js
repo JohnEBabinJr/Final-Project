@@ -20,3 +20,5 @@ export default Playlist;
 // map the songs array and render them
 // set if styling statement to change based on if song is played
 // render out as a table
+// ^ using a for loop, or make a component for each individual song
+//    ^  ie Playlist & PlaylistItem
