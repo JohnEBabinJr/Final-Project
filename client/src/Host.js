@@ -32,8 +32,6 @@ class Host extends React.Component {
 
   handleFormSubmit = event => {
     // Preventing the default behavior of the form submit (which is to refresh the page)
-    event.preventDefault();
-    this.getSong(this.state.token);
   };
 
   openModal() {
@@ -83,6 +81,7 @@ class Host extends React.Component {
                   href={`${authEndpoint}?client_id=${clientId}&redirect_uri=${redirectUri}&scope=${scopes.join(
                     "%20"
                   )}&response_type=token&show_dialog=true`}
+                  onClick={this.handleFormSubmit}
                 >
                   Go
                 </a>

@@ -1,37 +1,68 @@
 import React from "react";
-import "./Player.css";
 
-const Player = props => {
-  const backgroundStyles = {
-    backgroundImage: `url(${props.item.album.images[0].url})`
-  };
+class Player extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      token: ""
+    };
+  }
 
-  const progressBarStyles = {
-    width: (props.progress_ms * 100) / props.item.duration_ms + "%"
-  };
+  componentDidMount() {
+    window.onSpotifyWebPlaybackSDKReady = () => {
+      const token =
+        "BQBp6uKyA1MjpUbOQvMrZ1tUJs3R3uu7N1lR8fG7kJbNB8MbT6jSP10v05ywN8xZkl9SijyUKtBCzWii0RzBkjW696Ue8gbuiy-x9ViQenVAnzBa63noKPzrNJvpgCEkyUFQUzSNLG2RbWjwn1iQcH-K0NScpNquiok";
+      const player = new Spotify.Player({
+        name: "Web Playback SDK Quick Start Player",
+        getOAuthToken: cb => {
+          cb(token);
+        }
+      });
 
-  return (
-    <div className="App">
-      <div className="main-wrapper">
-        <div className="now-playing__img">
-          <img src={props.item.album.images[0].url} />
-        </div>
-        <div className="now-playing__side">
-          <div className="now-playing__name">{props.item.name}</div>
-          <div className="now-playing__artist">
-            {props.item.artists[0].name}
-          </div>
-          <div className="now-playing__status">
-            {props.is_playing ? "Playing" : "Paused"}
-          </div>
-          <div className="progress">
-            <div className="progress__bar" style={progressBarStyles} />
-          </div>
-        </div>
-        <div className="background" style={backgroundStyles} />{" "}
-      </div>
-    </div>
-  );
-};
+      // Error handling
+      player.addListener("initialization_error", ({ message }) => {
+        console.error(message);
+      });
+      player.addListener("authentication_error", ({ message }) => {
+        console.error(message);
+      });
+      player.addListener("account_error", ({ message }) => {
+        console.error(message);
+      });
+      player.addListener("playback_error", ({ message }) => {
+        console.error(message);
+      });
+
+      // Playback status updates
+      player.addListener("player_state_changed", state => {
+        console.log(state);
+      });
+
+      // Ready
+      player.addListener("ready", ({ device_id }) => {
+        console.log("Ready with Device ID", device_id);
+      });
+
+      // Not Ready
+      player.addListener("not_ready", ({ device_id }) => {
+        console.log("Device ID has gone offline", device_id);
+      });
+
+      // Connect to the player!
+      player.connect();
+    };
+  }
+
+  render() {
+    return (
+      <iframe
+        title="Spotify"
+        className="SpotifyPlayer"
+        src="https://sdk.scdn.co/spotify-player.js"
+        //src={`https://embed.spotify.com/?uri=${uri}&view=${view}&theme=${theme}`}
+      />
+    );
+  }
+}
 
 export default Player;
