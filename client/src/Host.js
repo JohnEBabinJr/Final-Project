@@ -10,8 +10,8 @@ import {
 } from "./config_example.js";
 
 class Host extends React.Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
 
     this.state = {
       nickname: "",
@@ -66,27 +66,7 @@ class Host extends React.Component {
               Let's get started with a new playlist. Enter a nickname for
               yourself.
             </p>
-            <form>
-              <div class="form-group mb-2">
-                <input
-                  type="text"
-                  name="nickname"
-                  placeholder="Nickname"
-                  value={this.state.nickname}
-                  onChange={this.handleInputChange}
-                />
-                <a
-                  id="goButton"
-                  className="btn btn--loginApp-link"
-                  href={`${authEndpoint}?client_id=${clientId}&redirect_uri=${redirectUri}&scope=${scopes.join(
-                    "%20"
-                  )}&response_type=token&show_dialog=true`}
-                  onClick={this.handleFormSubmit}
-                >
-                  Go
-                </a>
-              </div>
-            </form>
+            {this.props.children}
           </div>
         </Modal>
       </div>
