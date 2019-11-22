@@ -10,8 +10,8 @@ import {
 } from "./guest_config.js";
 
 class Guest extends React.Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
 
     this.state = {
       roomId: "",
@@ -64,37 +64,7 @@ class Guest extends React.Component {
           </Button>
           <div className="content">
             <p>Let's get you started. Enter a nickname for yourself.</p>
-            <form class="form-inline">
-              <div class="form-group mb-2">
-                <label for="nickname" class="sr-only">
-                  nickname
-                </label>
-                <input
-                  type="text"
-                  readonly
-                  class="form-control-plaintext"
-                  name="nickname"
-                  value={this.state.nickname}
-                  onChange={this.handleInputChange}
-                />
-                <input
-                  type="text"
-                  readonly
-                  class="form-control-plaintext"
-                  name="roomId"
-                  value={this.state.roomId}
-                  onChange={this.handleInputChange}
-                />
-                <a
-                  className="btn btn--loginApp-link"
-                  href={`${guestEndpoint}?client_id=${guestId}&redirect_uri=${guestUri}&scope=${guestScopes.join(
-                    "%20"
-                  )}&response_type=token&show_dialog=true`}
-                >
-                  Guest
-                </a>
-              </div>
-            </form>
+            {this.props.children}
           </div>
         </Modal>
       </div>

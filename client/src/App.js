@@ -11,7 +11,18 @@ import Guest from "./Guest";
 import API from "./utils/API";
 import ReactDOM from "react-dom";
 import SpotifyPlayer from "react-spotify-player";
-
+import {
+  authEndpoint,
+  clientId,
+  redirectUri,
+  scopes
+} from "./config_example.js";
+import {
+  guestEndpoint,
+  guestId,
+  guestUri,
+  guestScopes
+} from "./guest_config.js";
 // Identify if host or guest
 // Full search
 // Playlist
@@ -50,22 +61,25 @@ class App extends Component {
       this.setState({
         token: _token
       });
-<<<<<<< Updated upstream
-      //this.getCurrentlyPlaying(_token);
-      this.makeRoom();
-      setTimeout(this.getStuffFromDB, 1000);
-=======
       this.makeRoom();
       setTimeout(this.getStuffFromDB, 500);
->>>>>>> Stashed changes
     }
   }
   makeRoom = () => {
     // var hashids = new Hashids("this is my salt"),
     //   id = hashids.encode(1, 2, 3),
     //   numbers = hashids.decode(id);
-    let roomId;
-    if (!this.state.room) {
+
+    var roomId;
+    if (sessionStorage.getItem("room")) {
+      roomId = sessionStorage.getItem("room");
+      this.setState({
+        room: roomId
+      });
+      sessionStorage.removeItem("room");
+      return this.state.room;
+    } else {
+      roomId = "";
       var Arr = [];
       function getRandomInt() {
         return Math.floor(Math.random() * Math.floor(10));
@@ -77,12 +91,11 @@ class App extends Component {
       roomId = Arr.join("");
       console.log(roomId);
       this.setState({ room: roomId });
-      return roomId;
-    } else {
-      roomId = this.state.room;
-      return roomId;
+      sessionStorage.removeItem("room");
+      return this.state.room;
     }
   };
+
   getStuffFromDB = () => {
     API.getTracksByRoomId(this.state.room).then(res => {
       this.setState({
@@ -165,24 +178,19 @@ class App extends Component {
       },
       success: data => {
         console.log("data", data);
+        var nickName = sessionStorage.getItem("nickname");
         API.saveTrack({
-          roomId: this.makeRoom(),
+          roomId: this.state.room,
           trackId: data.tracks.items[0].id,
           trackName: data.tracks.items[0].name,
           artistName: data.tracks.items[0].artists[0].name,
           albumName: data.tracks.items[0].album.name,
           albumCover: data.tracks.items[0].album.images[1].url,
-<<<<<<< Updated upstream
-          userName: "Connor"
+          userName: nickName
         });
-      }
-    }).then(setTimeout(this.getStuffFromDB, 500));
-=======
-          userName: this.state.nickname
-        });
+        console.log(this.state.nickname);
       }
     }).then(setTimeout(this.getStuffFromDB, 1000));
->>>>>>> Stashed changes
   }
 
   setSong() {
@@ -223,7 +231,15 @@ class App extends Component {
   handleFormSubmit = event => {
     // Preventing the default behavior of the form submit (which is to refresh the page)
     event.preventDefault();
+
     this.getSong(this.state.token);
+  };
+
+  handleModalSubmit = () => {
+    sessionStorage.setItem("nickname", this.state.nickname);
+    if (this.state.room) {
+      sessionStorage.setItem("room", this.state.room);
+    }
   };
 
   render() {
@@ -309,11 +325,29 @@ class App extends Component {
                 {" "}
                 {/* Host Login */}
                 {!this.state.token && (
-                  <Host
-                    room={this.state.room}
-                    handleInput={this.handleInputChange}
-                    handleSubmit={this.getNickname}
-                  />
+                  <Host>
+                    {" "}
+                    <form>
+                      <input
+                        type="text"
+                        placeholder="Nickname"
+                        name="nickname"
+                        value={this.state.nickname}
+                        onChange={this.handleInputChange}
+                      />
+
+                      <a
+                        id="goButton"
+                        className="btn btn--loginApp-link"
+                        href={`${authEndpoint}?client_id=${clientId}&redirect_uri=${redirectUri}&scope=${scopes.join(
+                          "%20"
+                        )}&response_type=token&show_dialog=true`}
+                        onClick={this.handleModalSubmit}
+                      >
+                        Go
+                      </a>
+                    </form>
+                  </Host>
                 )}
               </div>
 
@@ -321,11 +355,41 @@ class App extends Component {
                 {" "}
                 {/* Guest Login */}
                 {!this.state.token && (
-                  <Guest
-                    room={this.state.room}
-                    handleInput={this.handleInputChange}
-                    handleSubmit={this.handleFormSubmit}
-                  />
+                  <Guest>
+                    {" "}
+                    <form class="form-inline">
+                      <div class="form-group mb-2">
+                        <label for="nickname" class="sr-only">
+                          nickname
+                        </label>
+                        <input
+                          type="text"
+                          class="form-control-plaintext"
+                          name="nickname"
+                          placeholder="Nickname"
+                          value={this.state.nickname}
+                          onChange={this.handleInputChange}
+                        />
+                        <input
+                          type="text"
+                          class="form-control-plaintext"
+                          placeholder="Room ID"
+                          name="room"
+                          value={this.state.room}
+                          onChange={this.handleInputChange}
+                        />
+                        <a
+                          className="btn btn--loginApp-link"
+                          href={`${guestEndpoint}?client_id=${guestId}&redirect_uri=${guestUri}&scope=${guestScopes.join(
+                            "%20"
+                          )}&response_type=token&show_dialog=true`}
+                          onClick={this.handleModalSubmit}
+                        >
+                          Guest
+                        </a>
+                      </div>
+                    </form>
+                  </Guest>
                 )}
               </div>
             </div>
@@ -341,37 +405,30 @@ class App extends Component {
             />
           )} */}
           {this.state.token && (
-            <Playlist
-              currentRoom={this.state.room}
-              songs={this.state.songArray}
-            />
+            <Playlist>
+              {this.state.songArray.map(song => (
+                <div>
+                  <tr>
+                    <td>{song.trackName}</td>
+                    <td>{song.artistName}</td>
+                    <td>{song.albumName}</td>
+                    <td>{song.userName}</td>
+                    <td>
+                      <button
+                        onClick={() => this.setCurrentPlayingSong(song.trackId)}
+                      ></button>
+                    </td>
+                  </tr>
+                </div>
+              ))}
+            </Playlist>
           )}
-<<<<<<< Updated upstream
-          <Playlist>
-            {this.state.songArray.map(song => (
-              <div>
-                <tr>
-                  <td>{song.trackName}</td>
-                  <td>{song.artistName}</td>
-                  <td>{song.albumName}</td>
-                  <td>{song.userName}</td>
-                  <td>
-                    <button
-                      onClick={() => this.setCurrentPlayingSong(song.trackId)}
-                    ></button>
-                  </td>
-                </tr>
-              </div>
-            ))}
-          </Playlist>
-=======
           {/* <altPlayer></altPlayer> */}
 
           {/* <SpotifyPlayer
             uri="spotify:album:1TIUsv8qmYLpBEhvmBmyBk"
            
           /> */}
->>>>>>> Stashed changes
         </header>
       </div>
     );
