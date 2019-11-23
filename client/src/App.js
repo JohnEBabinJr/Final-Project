@@ -11,6 +11,7 @@ import Guest from "./Guest";
 import API from "./utils/API";
 import ReactDOM from "react-dom";
 import SpotifyPlayer from "react-spotify-player";
+import ChangeColorFunction from "./components/Colorchange";
 import {
   authEndpoint,
   clientId,
@@ -249,6 +250,8 @@ class App extends Component {
     if (this.state.room) {
       sessionStorage.setItem("room", this.state.room);
     }
+
+    this.ChangeColorFunction();
   };
 
   render() {
@@ -275,6 +278,12 @@ class App extends Component {
       </a>
     );
 
+    const pee = (
+      <a href="https://jon-finder.herokuapp.com/">
+        <i class="fas fa-toilet"></i>
+      </a>
+    );
+
     const props = {};
 
     return (
@@ -284,41 +293,61 @@ class App extends Component {
           <a style={homebutton}>{home}</a>
         </div>
         <div className="links">
-          {github} | {aboutUs}
+          {github} | {pee} | {aboutUs} |
         </div>
         <header className="App-header">
           {this.state.token && (
-            <form>
-              <input
-                type="text"
-                placeholder="Track"
-                name="tempTrack"
-                value={this.state.tempTrack}
-                onChange={this.handleInputChange}
-              />
-              <input
-                type="text"
-                placeholder="Artist"
-                name="tempArtist"
-                value={this.state.tempArtist}
-                onChange={this.handleInputChange}
-              />
-              <input
-                type="text"
-                placeholder="Album"
-                name="tempAlbum"
-                value={this.state.tempAlbum}
-                onChange={this.handleInputChange}
-              />
-              <button onClick={this.handleFormSubmit}>Submit</button>
-            </form>
+            <div>
+              <div class="container">
+                <div class="row">
+                  <div class="col">
+                    <div className="Player-header">
+                      <h2>Now Playing</h2>
+                      <p>
+                        Let's get this party started, {this.state.username}!
+                        Your room number is:
+                        <br></br>
+                        <span className="roomID">{this.state.room}</span>
+                      </p>
+                      <hr class="my-4" id="spacer"></hr>
+                    </div>
+                    <form>
+                      <input
+                        type="text"
+                        placeholder="Track"
+                        name="tempTrack"
+                        value={this.state.tempTrack}
+                        onChange={this.handleInputChange}
+                      />
+                      <input
+                        type="text"
+                        placeholder="Artist"
+                        name="tempArtist"
+                        value={this.state.tempArtist}
+                        onChange={this.handleInputChange}
+                      />
+                      <input
+                        type="text"
+                        placeholder="Album"
+                        name="tempAlbum"
+                        value={this.state.tempAlbum}
+                        onChange={this.handleInputChange}
+                      />
+                      <button onClick={this.handleFormSubmit}>Submit</button>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
           )}
           {!this.state.token && (
             <div className="container">
               <img src={logo} className="App-logo" alt="logo" />
               <div className="row">
                 <div className="col col-5 mx-auto" id="app">
-                  <h1>Car - a - OK</h1>
+                  <h1>
+                    Car - <i class="fas fa-road"></i> - OK
+                  </h1>
                   <p className="lead mx-3">
                     Collaborate on the ultimate roadtrip playlist with your
                     friends using Spotify. Share the link, queue up songs, and
@@ -393,9 +422,7 @@ class App extends Component {
                             "%20"
                           )}&response_type=token&show_dialog=true`}
                           onClick={this.handleModalSubmit}
-                        >
-                          Guest
-                        </a>
+                        ></a>
                       </div>
                     </form>
                   </Guest>
@@ -435,7 +462,7 @@ class App extends Component {
               ))}
             </Playlist>
           )}
-          <AltPlayer token={this.state.token} />
+          <AltPlayer token={this.state.token} nickname={this.state.nickname} />
           {/* <SpotifyPlayer uri="spotify:album:1TIUsv8qmYLpBEhvmBmyBk" /> */}
         </header>
       </div>

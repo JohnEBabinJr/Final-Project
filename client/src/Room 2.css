@@ -1,0 +1,19 @@
+.room-form {
+    float: left;
+}
+
+#room-btn {
+    float: left;
+    background-color: transparent;
+    border-radius: 2em;
+    border: 2px solid #1DB954;
+    color: #1DB954;
+    cursor: pointer;
+    font-size: 2vmin;
+    /* padding: 0.7em 1.5em; */
+    transition: all 0.25s ease;
+}
+
+#room-btn:hover {
+    background: white;
+}

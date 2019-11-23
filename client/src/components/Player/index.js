@@ -1,4 +1,5 @@
 import React from "react";
+import { userInfo } from "os";
 
 class Player extends React.Component {
   constructor(props) {
@@ -11,6 +12,7 @@ class Player extends React.Component {
       trackName: "Track Name",
       artistName: "Artist Name",
       albumName: "Album Name",
+      nickname: "Nickname",
       playing: false,
       position: 0,
       duration: 0
@@ -174,35 +176,51 @@ class Player extends React.Component {
       error,
       position,
       duration,
-      playing
+      playing,
+      nickname
     } = this.state;
 
     return (
-      <div>
-        {loggedIn ? (
-          <div className="Player">
-            <div className="Player-header">
-              <h2>Now Playing</h2>
-            </div>
 
-            <div>
-              <p>Artist: {artistName}</p>
-              <p>Track: {trackName}</p>
-              <p>Album: {albumName}</p>
-              <p>
-                <button onClick={() => this.onPrevClick()}> Prev </button>
-                <button onClick={() => this.onPlayClick()}>
-                  {playing ? "Pause" : "Play"}
-                </button>
-                <button onClick={() => this.onNextClick()}> Next </button>
-              </p>
-            </div>
-          </div>
-        ) : (
-          <div>
-            <button onClick={() => this.handleLogin()}>Open Player</button>
-          </div>
-        )}
+      <div className="Player">
+        <p>
+          <button class="btn-circle" onClick={() => this.onPrevClick()}>
+            <i class="fas fa-step-backward"></i>
+          </button>
+          <button onClick={() => this.onPlayClick()}>
+            {playing ? (
+              <i class="fas fa-pause"></i>
+            ) : (
+              <i class="fas fa-play"></i>
+            )}
+          </button>
+          <button onClick={() => this.onNextClick()}>
+            {" "}
+            <i class="fas fa-step-forward"></i>{" "}
+          </button>
+        </p>
+        <div>
+          <table class="table table-bordered bg-white" id="playlistTable">
+            <thead>
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col">Song</th>
+                <th scope="col">Artist</th>
+                <th scope="col">Album</th>
+                <th scope="col">Added</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <th scope="row">{position}</th>
+                <td>{trackName}</td>
+                <td>{artistName}</td>
+                <td>{albumName}</td>
+                <td>{nickname}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
       </div>
     );
   }

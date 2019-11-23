@@ -50,7 +50,7 @@ class Guest extends React.Component {
   render() {
     return (
       <div>
-        <Button onClick={this.openModal}>Guest</Button>
+        <Button onClick={this.openModal}>Join Room</Button>
         <Modal
           isOpen={this.state.modalIsOpen}
           onAfterOpen={this.afterOpenModal}
