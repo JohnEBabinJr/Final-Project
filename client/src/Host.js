@@ -74,23 +74,4 @@ class Host extends React.Component {
   }
 }
 
-// <div className="form-inline">
-//   <h6>Enter ur username</h6>
-//   <div id="room-form" className="form-inline">
-//     <div id="room-input">
-//       <label for="username"></label>
-//       <input
-//         type="text"
-//         class="form-control"
-//         id="username"
-//         placeholder="enter ur name (edit this in room.js)"
-//       />
-//     </div>
-
-//     <button type="submit" class="btn btn-primary" id="room-btn">
-//       Create New Room
-//     </button>
-//   </div>
-// </div>
-
 export default Host;
