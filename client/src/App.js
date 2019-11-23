@@ -255,6 +255,10 @@ class App extends Component {
   };
 
   render() {
+    const { username, nickname, roomId } = this.state;
+    const isEnabled =
+      nickname.length > 0 && roomId.length > 0 && username.length > 0;
+
     const github = (
       <a href="https://github.com/JohnEBabinJr/final-project/" className="mr-1">
         <i className="fab fa-github fa-1x"></i>
@@ -304,7 +308,8 @@ class App extends Component {
                     <div className="Player-header">
                       <h2>Now Playing</h2>
                       <p>
-                        Let's get this party started, {this.state.username}!
+                        Let's get this party started,{" "}
+                        <span className="nickname">{this.state.nickname}</span>!
                         Your room number is:
                         <br></br>
                         <span className="roomID">{this.state.room}</span>
@@ -367,13 +372,17 @@ class App extends Component {
                     {" "}
                     <form>
                       <input
+                        disabled={isEnabled}
                         type="text"
                         placeholder="Nickname"
                         name="nickname"
                         value={this.state.nickname}
                         onChange={this.handleInputChange}
+                        id="validationCustomUsername"
                       />
-
+                      <div class="invalid-feedback">
+                        Please enter a nickname.
+                      </div>
                       <a
                         id="goButton"
                         className="btn btn--loginApp-link"
@@ -407,7 +416,11 @@ class App extends Component {
                           placeholder="Nickname"
                           value={this.state.nickname}
                           onChange={this.handleInputChange}
+                          id="validationCustomUsername"
                         />
+                        <div class="invalid-feedback">
+                          Please enter a nickname.
+                        </div>
                         <input
                           type="text"
                           className="form-control-plaintext"
@@ -415,14 +428,20 @@ class App extends Component {
                           name="room"
                           value={this.state.room}
                           onChange={this.handleInputChange}
+                          id="validationCustomUsername"
                         />
+                        <div class="invalid-feedback">
+                          Please enter a Room ID.
+                        </div>
                         <a
                           className="btn btn--loginApp-link"
                           href={`${guestEndpoint}?client_id=${guestId}&redirect_uri=${guestUri}&scope=${guestScopes.join(
                             "%20"
                           )}&response_type=token&show_dialog=true`}
                           onClick={this.handleModalSubmit}
-                        ></a>
+                        >
+                          Go
+                        </a>
                       </div>
                     </form>
                   </Guest>
@@ -447,19 +466,7 @@ class App extends Component {
                 <div class="container">
                   <div class="row">
                     <div class="col">
-                      <table
-                        class="table table-bordered bg-white"
-                        id="playlistTable"
-                      >
-                        <thead>
-                          <tr>
-                            <th scope="col">#</th>
-                            <th scope="col">Song</th>
-                            <th scope="col">Artist</th>
-                            <th scope="col">Album</th>
-                            <th scope="col">Added</th>
-                          </tr>
-                        </thead>
+                      <table>
                         <tbody>
                           <tr>
                             <th scope="row">{}</th>
@@ -467,16 +474,21 @@ class App extends Component {
                             <td>{song.artistName}</td>
                             <td>{song.albumName}</td>
                             <td>{song.userName}</td>
+                            <td>
+                              {" "}
+                              <button
+                                onClick={() =>
+                                  this.setCurrentPlayingSong(song.trackId)
+                                }
+                              >
+                                <i class="fas fa-play"></i>
+                              </button>
+                            </td>
                           </tr>
                         </tbody>
                       </table>
                     </div>
                   </div>
-                  <button
-                    onClick={() => this.setCurrentPlayingSong(song.trackId)}
-                  >
-                    Nice
-                  </button>
                 </div>
               ))}
             </Playlist>
