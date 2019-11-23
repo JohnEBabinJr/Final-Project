@@ -178,24 +178,31 @@ class Player extends React.Component {
     } = this.state;
 
     return (
-      <div className="Player">
-        <div className="Player-header">
-          <h2>Now Playing</h2>
-          <p>A Spotify Web Playback API Demo.</p>
-        </div>
+      <div>
+        {loggedIn ? (
+          <div className="Player">
+            <div className="Player-header">
+              <h2>Now Playing</h2>
+            </div>
 
-        <div>
-          <p>Artist: {artistName}</p>
-          <p>Track: {trackName}</p>
-          <p>Album: {albumName}</p>
-          <p>
-            <button onClick={() => this.onPrevClick()}> Prev </button>
-            <button onClick={() => this.onPlayClick()}>
-              {playing ? "Paused" : "Playing"}
-            </button>
-            <button onClick={() => this.onNextClick()}> Next </button>
-          </p>
-        </div>
+            <div>
+              <p>Artist: {artistName}</p>
+              <p>Track: {trackName}</p>
+              <p>Album: {albumName}</p>
+              <p>
+                <button onClick={() => this.onPrevClick()}> Prev </button>
+                <button onClick={() => this.onPlayClick()}>
+                  {playing ? "Pause" : "Play"}
+                </button>
+                <button onClick={() => this.onNextClick()}> Next </button>
+              </p>
+            </div>
+          </div>
+        ) : (
+          <div>
+            <button onClick={() => this.handleLogin()}>Open Player</button>
+          </div>
+        )}
       </div>
     );
   }
