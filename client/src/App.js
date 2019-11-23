@@ -288,7 +288,7 @@ class App extends Component {
     );
 
     const pee = (
-      <a href="https://jon-finder.herokuapp.com/">
+      <a href="https://jon-finder.herokuapp.com/" target="_blank">
         <i class="fas fa-toilet"></i>
       </a>
     );
@@ -453,20 +453,39 @@ class App extends Component {
           {this.state.token && (
             <Playlist>
               {this.state.songArray.map(song => (
-                <div>
-                  <tr>
-                    <td>{song.trackName}</td>
-                    <td>{song.artistName}</td>
-                    <td>{song.albumName}</td>
-                    <td>{song.userName}</td>
-                    <td>
-                      <button
-                        onClick={() => this.setCurrentPlayingSong(song.trackId)}
+                <div class="container">
+                  <div class="row">
+                    <div class="col">
+                      <table
+                        class="table table-bordered bg-white"
+                        id="playlistTable"
                       >
-                        Nice
-                      </button>
-                    </td>
-                  </tr>
+                        <thead>
+                          <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Song</th>
+                            <th scope="col">Artist</th>
+                            <th scope="col">Album</th>
+                            <th scope="col">Added</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr>
+                            <th scope="row">{}</th>
+                            <td>{song.trackName}</td>
+                            <td>{song.artistName}</td>
+                            <td>{song.albumName}</td>
+                            <td>{song.userName}</td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                  <button
+                    onClick={() => this.setCurrentPlayingSong(song.trackId)}
+                  >
+                    Nice
+                  </button>
                 </div>
               ))}
             </Playlist>
