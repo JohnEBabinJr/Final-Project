@@ -181,7 +181,6 @@ class Player extends React.Component {
     } = this.state;
 
     return (
-
       <div className="Player">
         <p>
           <button class="btn-circle" onClick={() => this.onPrevClick()}>

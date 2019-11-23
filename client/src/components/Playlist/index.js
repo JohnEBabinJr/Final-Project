@@ -1,6 +1,15 @@
 import React from "react";
 
 const Playlist = props => {
+  // <tbody>
+  //   <tr>
+  //     <th scope="row">{position}</th>
+  //     <td>{trackName}</td>
+  //     <td>{artistName}</td>
+  //     <td>{albumName}</td>
+  //     <td>{nickname}</td>
+  //   </tr>
+  // </tbody>;
   return <div>{props.children}</div>;
 };
 export default Playlist;
