@@ -181,7 +181,6 @@ class Player extends React.Component {
     } = this.state;
 
     return (
-
       <div className="Player">
         <p>
           <button class="btn-circle" onClick={() => this.onPrevClick()}>
@@ -199,28 +198,6 @@ class Player extends React.Component {
             <i class="fas fa-step-forward"></i>{" "}
           </button>
         </p>
-        <div>
-          <table class="table table-bordered bg-white" id="playlistTable">
-            <thead>
-              <tr>
-                <th scope="col">#</th>
-                <th scope="col">Song</th>
-                <th scope="col">Artist</th>
-                <th scope="col">Album</th>
-                <th scope="col">Added</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <th scope="row">{position}</th>
-                <td>{trackName}</td>
-                <td>{artistName}</td>
-                <td>{albumName}</td>
-                <td>{nickname}</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
       </div>
     );
   }
