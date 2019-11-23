@@ -10,7 +10,7 @@ import Host from "./Host";
 import Guest from "./Guest";
 import API from "./utils/API";
 import ReactDOM from "react-dom";
-import SpotifyPlayer from "react-spotify-player";
+// import SpotifyPlayer from "react-spotify-player";
 import {
   authEndpoint,
   clientId,
@@ -23,6 +23,7 @@ import {
   guestUri,
   guestScopes
 } from "./guest_config.js";
+import { ENETUNREACH } from "constants";
 // Identify if host or guest
 // Full search
 // Playlist
@@ -33,6 +34,8 @@ class App extends Component {
     this.state = {
       nickname: "",
       songArray: [],
+      nextToPlay: [],
+      currentlyPlaying: "",
       room: "",
       username: "",
       tempTrack: "",
@@ -48,7 +51,6 @@ class App extends Component {
         duration_ms: 0
       },
       is_playing: "Paused",
-      nextToPlay: "",
       progress_ms: 0
     };
     this.getCurrentlyPlaying = this.getCurrentlyPlaying.bind(this);
@@ -193,21 +195,28 @@ class App extends Component {
     }).then(setTimeout(this.getStuffFromDB, 1000));
   }
 
-  setSong() {
-    alert("Hello!");
-  }
-
-  // setPlaylist() {
-  //   //map songs up until current playing, then set all next song to be played to state
-  //   this.songArray.map(song => {
-  //     song.played = false;
-  //   });
-  //   this.songArray.trackId = this.state.is_playing;
-  // }
-
   setCurrentPlayingSong(trackId) {
-    alert(trackId);
+    this.setState({ currentlyPlaying: trackId });
+    var j;
+    var tempArray = [];
+    this.setState({ nextToPlay: [] });
+    this.state.songArray.map(song => {
+      tempArray.push(song.trackId);
+    });
+
+    tempArray.forEach((item, index) => {
+      if (trackId === item) {
+        j = index;
+      }
+    });
+
+    var secondTemp = [];
+    for (var i = j + 1; i < tempArray.length; i++) {
+      secondTemp.push(tempArray[i]);
+    }
+    this.setState({ nextToPlay: secondTemp });
   }
+
   handleTrack(data) {
     console.log("handletrack");
     API.saveTrack({
