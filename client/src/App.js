@@ -72,10 +72,14 @@ class App extends Component {
     //   numbers = hashids.decode(id);
 
     var roomId;
+    var nick = sessionStorage.getItem("nickname");
+
     if (sessionStorage.getItem("room")) {
       roomId = sessionStorage.getItem("room");
+
       this.setState({
-        room: roomId
+        room: roomId,
+        nickname: nick
       });
       sessionStorage.removeItem("room");
       return this.state.room;
@@ -90,8 +94,13 @@ class App extends Component {
       }
 
       roomId = Arr.join("");
+
       console.log(roomId);
-      this.setState({ room: roomId });
+      this.setState({
+        room: roomId,
+        nickname: nick
+      });
+
       sessionStorage.removeItem("room");
       return this.state.room;
     }
