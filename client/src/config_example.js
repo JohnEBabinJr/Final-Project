@@ -7,9 +7,13 @@ export const clientSecret = "e42d147ddad74c2ab3cee9af552aac39";
 export const redirectUri = "http://localhost:3000/";
 export const scopes = [
   "user-top-read",
+  "user-read-email",
+  "user-read-private",
   "user-read-currently-playing",
   "user-read-playback-state",
   "streaming",
+  "user-modify-playback-state",
+  "app-remote-control",
   "playlist-modify-public"
 ];
 
