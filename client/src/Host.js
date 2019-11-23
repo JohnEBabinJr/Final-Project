@@ -10,8 +10,8 @@ import {
 } from "./config_example.js";
 
 class Host extends React.Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
 
     this.state = {
       nickname: "",
@@ -32,8 +32,6 @@ class Host extends React.Component {
 
   handleFormSubmit = event => {
     // Preventing the default behavior of the form submit (which is to refresh the page)
-    event.preventDefault();
-    this.getSong(this.state.token);
   };
 
   openModal() {
@@ -68,50 +66,12 @@ class Host extends React.Component {
               Let's get started with a new playlist. Enter a nickname for
               yourself.
             </p>
-            <form>
-              <div class="form-group mb-2">
-                <input
-                  type="text"
-                  name="nickname"
-                  placeholder="Nickname"
-                  value={this.state.nickname}
-                  onChange={this.handleInputChange}
-                />
-                <a
-                  id="goButton"
-                  className="btn btn--loginApp-link"
-                  href={`${authEndpoint}?client_id=${clientId}&redirect_uri=${redirectUri}&scope=${scopes.join(
-                    "%20"
-                  )}&response_type=token&show_dialog=true`}
-                >
-                  Go
-                </a>
-              </div>
-            </form>
+            {this.props.children}
           </div>
         </Modal>
       </div>
     );
   }
 }
-
-// <div className="form-inline">
-//   <h6>Enter ur username</h6>
-//   <div id="room-form" className="form-inline">
-//     <div id="room-input">
-//       <label for="username"></label>
-//       <input
-//         type="text"
-//         class="form-control"
-//         id="username"
-//         placeholder="enter ur name (edit this in room.js)"
-//       />
-//     </div>
-
-//     <button type="submit" class="btn btn-primary" id="room-btn">
-//       Create New Room
-//     </button>
-//   </div>
-// </div>
 
 export default Host;

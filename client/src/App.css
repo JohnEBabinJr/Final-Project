@@ -75,6 +75,7 @@ Button {
 Button {
   font-size: 1.5vw;
   margin-left: 10px;
+  padding: 7px 30px;
 }
 
 .btn:hover,
@@ -120,16 +121,17 @@ Button:hover {
   width: 50%
 }
 
-.userButton {
+/* .userButton {
   font-size: 1.5vw;
   padding: 10px 50px;
-}
+} */
 
 /* Typography */
 
 a {
   text-decoration: none;
   color: white;
+
 
 }
 
@@ -140,8 +142,14 @@ a:hover {
 
 h1 {
   font-size: 4vw;
-  font-family: 'Baloo';
-  letter-spacing: -3px;
+  font-family: 'Staatliches';
+
+}
+
+h2 {
+  font-size: 3vw;
+  font-family: 'Lato';
+  font-weight: 700;
 }
 
 /* Playlist Styles */
@@ -149,4 +157,44 @@ h1 {
 form input {
   font-family: 'Lato';
   margin: 5px;
+}
+
+.Player button {
+  border: 1px solid transparent;
+  background-color: #1DB954;
+  font-size: 1.5vw;
+  margin: 70px 10px 10px;
+}
+
+
+#spacer {
+  background-color: #1DB954;
+}
+
+#playlistTable {
+  border: 1px solid #1DB954;
+  margin-top: 20px;
+}
+
+#playlistTable>thead>tr>th {
+  border: 1px solid #1DB954;
+  background-color: rgba(29, 185, 84, 0.6)
+}
+
+#playlistTable>tbody>tr>td {
+  border: 1px solid #1DB954;
+  font-size: 1.5vw;
+  font-weight: 400;
+}
+
+#currentSong {
+  font-weight: 700;
+}
+
+.roomID {
+  font-family: 'lato';
+  font-weight: 700;
+  font-size: 3vw;
+  color: #1DB954;
+  letter-spacing: 7px;
 }

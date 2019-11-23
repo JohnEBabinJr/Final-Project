@@ -4,12 +4,26 @@ import "./App.css";
 import hash from "./hash";
 import logo from "./spotify-icon.png";
 import Player from "./Player";
+import AltPlayer from "./components/Player/index";
 import Playlist from "./components/Playlist/index";
 import Host from "./Host";
 import Guest from "./Guest";
 import API from "./utils/API";
 import ReactDOM from "react-dom";
-
+import SpotifyPlayer from "react-spotify-player";
+import ChangeColorFunction from "./components/Colorchange";
+import {
+  authEndpoint,
+  clientId,
+  redirectUri,
+  scopes
+} from "./config_example.js";
+import {
+  guestEndpoint,
+  guestId,
+  guestUri,
+  guestScopes
+} from "./guest_config.js";
 // Identify if host or guest
 // Full search
 // Playlist
@@ -18,13 +32,14 @@ class App extends Component {
   constructor() {
     super();
     this.state = {
+      nickname: "",
       songArray: [],
       room: "",
       username: "",
       tempTrack: "",
       tempArtist: "",
       tempAlbum: "",
-      token: null,
+      token: "",
       item: {
         album: {
           images: [{ url: "" }]
@@ -34,6 +49,7 @@ class App extends Component {
         duration_ms: 0
       },
       is_playing: "Paused",
+      nextToPlay: "",
       progress_ms: 0
     };
     this.getCurrentlyPlaying = this.getCurrentlyPlaying.bind(this);
@@ -46,14 +62,48 @@ class App extends Component {
       this.setState({
         token: _token
       });
-      //this.getCurrentlyPlaying(_token);
-
-      this.getStuffFromDB();
+      this.makeRoom();
+      setTimeout(this.getStuffFromDB, 500);
     }
   }
+  makeRoom = () => {
+    // var hashids = new Hashids("this is my salt"),
+    //   id = hashids.encode(1, 2, 3),
+    //   numbers = hashids.decode(id);
+
+    var roomId;
+    if (sessionStorage.getItem("room")) {
+      roomId = sessionStorage.getItem("room");
+      this.setState({
+        room: roomId
+      });
+      sessionStorage.removeItem("room");
+      return this.state.room;
+    } else {
+      roomId = "";
+      var Arr = [];
+      function getRandomInt() {
+        return Math.floor(Math.random() * Math.floor(10));
+      }
+      for (var i = 0; i < 4; i++) {
+        Arr.push(getRandomInt());
+      }
+
+      roomId = Arr.join("");
+      console.log(roomId);
+      this.setState({ room: roomId });
+      sessionStorage.removeItem("room");
+      return this.state.room;
+    }
+  };
 
   getStuffFromDB = () => {
-    API.getTracksByRoomId("1").then(res => console.log(res));
+    API.getTracksByRoomId(this.state.room).then(res => {
+      this.setState({
+        songArray: res.data
+      });
+      console.log(this.state.songArray);
+    });
   };
 
   getCurrentlyPlaying(token) {
@@ -129,47 +179,36 @@ class App extends Component {
       },
       success: data => {
         console.log("data", data);
-        // this.setState({
-        //   item: data.tracks.items[0],
-        //   is_playing: data.is_playing,
-        //   progress_ms: data.progress_ms
-        // });
-        this.handleTrack(data);
-      }
-    }).then(
-      API.getTracksByRoomId(this.state.room).then(res => {
-        this.setState({
-          songArray: res.data
+        var nickName = sessionStorage.getItem("nickname");
+        API.saveTrack({
+          roomId: this.state.room,
+          trackId: data.tracks.items[0].id,
+          trackName: data.tracks.items[0].name,
+          artistName: data.tracks.items[0].artists[0].name,
+          albumName: data.tracks.items[0].album.name,
+          albumCover: data.tracks.items[0].album.images[1].url,
+          userName: nickName
         });
-        console.log(this.state.songArray);
-      })
-    );
+        console.log(this.state.nickname);
+      }
+    }).then(setTimeout(this.getStuffFromDB, 1000));
   }
 
-  makeRoom = () => {
-    // var hashids = new Hashids("this is my salt"),
-    //   id = hashids.encode(1, 2, 3),
-    //   numbers = hashids.decode(id);
-    let roomId;
-    if (!this.state.room) {
-      var Arr = [];
-      function getRandomInt() {
-        return Math.floor(Math.random() * Math.floor(10));
-      }
-      for (var i = 0; i < 4; i++) {
-        Arr.push(getRandomInt());
-      }
+  setSong() {
+    alert("Hello!");
+  }
 
-      roomId = Arr.join("");
-      console.log(roomId);
-      this.setState({ room: roomId });
-      return roomId;
-    } else {
-      roomId = this.state.room;
-      return roomId;
-    }
-  };
+  // setPlaylist() {
+  //   //map songs up until current playing, then set all next song to be played to state
+  //   this.songArray.map(song => {
+  //     song.played = false;
+  //   });
+  //   this.songArray.trackId = this.state.is_playing;
+  // }
 
+  setCurrentPlayingSong(trackId) {
+    alert(trackId);
+  }
   handleTrack(data) {
     console.log("handletrack");
     API.saveTrack({
@@ -179,7 +218,7 @@ class App extends Component {
       artistName: data.tracks.items[0].artists[0].name,
       albumName: data.tracks.items[0].album.name,
       albumCover: data.tracks.items[0].album.images[1].url,
-      userName: "Connor"
+      userName: this.state.nickname
     }).then(res => console.log("result:" + res));
   }
 
@@ -193,18 +232,28 @@ class App extends Component {
   handleFormSubmit = event => {
     // Preventing the default behavior of the form submit (which is to refresh the page)
     event.preventDefault();
+
     this.getSong(this.state.token);
+  };
+
+  handleModalSubmit = () => {
+    sessionStorage.setItem("nickname", this.state.nickname);
+    if (this.state.room) {
+      sessionStorage.setItem("room", this.state.room);
+    }
+
+    this.ChangeColorFunction();
   };
 
   render() {
     const github = (
-      <a href="https://github.com/JohnEBabinJr/final-project/" class="mr-1">
-        <i class="fab fa-github fa-1x"></i>
+      <a href="https://github.com/JohnEBabinJr/final-project/" className="mr-1">
+        <i className="fab fa-github fa-1x"></i>
       </a>
     );
 
     const aboutUs = (
-      <a href="/about" class="ml-2">
+      <a href="/about" className="ml-2">
         About Us
       </a>
     );
@@ -216,7 +265,13 @@ class App extends Component {
 
     const home = (
       <a href="/">
-        <i class="fas fa-home"></i>
+        <i className="fas fa-home"></i>
+      </a>
+    );
+
+    const pee = (
+      <a href="https://jon-finder.herokuapp.com/">
+        <i class="fas fa-toilet"></i>
       </a>
     );
 
@@ -229,15 +284,24 @@ class App extends Component {
           <a style={homebutton}>{home}</a>
         </div>
         <div className="links">
-          {github} | {aboutUs}
+          {github} | {pee} | {aboutUs} |
         </div>
         <header className="App-header">
           {this.state.token && (
             <div>
-              <h1>enter ur music info</h1>
               <div class="container">
                 <div class="row">
                   <div class="col">
+                    <div className="Player-header">
+                      <h2>Now Playing</h2>
+                      <p>
+                        Let's get this party started, {this.state.username}!
+                        Your room number is:
+                        <br></br>
+                        <span className="roomID">{this.state.room}</span>
+                      </p>
+                      <hr class="my-4" id="spacer"></hr>
+                    </div>
                     <form>
                       <input
                         type="text"
@@ -268,12 +332,14 @@ class App extends Component {
             </div>
           )}
           {!this.state.token && (
-            <div class="container">
+            <div className="container">
               <img src={logo} className="App-logo" alt="logo" />
-              <div class="row">
-                <div class="col col-5 mx-auto" id="app">
-                  <h1>Car-oling</h1>
-                  <p class="lead mx-3">
+              <div className="row">
+                <div className="col col-5 mx-auto" id="app">
+                  <h1>
+                    Car - <i class="fas fa-road"></i> - OK
+                  </h1>
+                  <p className="lead mx-3">
                     Collaborate on the ultimate roadtrip playlist with your
                     friends using Spotify. Share the link, queue up songs, and
                     export your playlist to relive the memories.
@@ -282,29 +348,75 @@ class App extends Component {
               </div>
             </div>
           )}
-          <div class="container" id="buttonContainer">
-            <div class="row">
-              <div class="col">
+          <div className="container" id="buttonContainer">
+            <div className="row">
+              <div className="col">
                 {" "}
                 {/* Host Login */}
                 {!this.state.token && (
-                  <Host
-                    room={this.state.room}
-                    handleInput={this.handleInputChange}
-                    handleSubmit={this.handleFormSubmit}
-                  />
+                  <Host>
+                    {" "}
+                    <form>
+                      <input
+                        type="text"
+                        placeholder="Nickname"
+                        name="nickname"
+                        value={this.state.nickname}
+                        onChange={this.handleInputChange}
+                      />
+
+                      <a
+                        id="goButton"
+                        className="btn btn--loginApp-link"
+                        href={`${authEndpoint}?client_id=${clientId}&redirect_uri=${redirectUri}&scope=${scopes.join(
+                          "%20"
+                        )}&response_type=token&show_dialog=true`}
+                        onClick={this.handleModalSubmit}
+                      >
+                        Go
+                      </a>
+                    </form>
+                  </Host>
                 )}
               </div>
 
-              <div class="col">
+              <div className="col">
                 {" "}
                 {/* Guest Login */}
                 {!this.state.token && (
-                  <Guest
-                    room={this.state.room}
-                    handleInput={this.handleInputChange}
-                    handleSubmit={this.handleFormSubmit}
-                  />
+                  <Guest>
+                    {" "}
+                    <form className="form-inline">
+                      <div className="form-group mb-2">
+                        <label for="nickname" className="sr-only">
+                          nickname
+                        </label>
+                        <input
+                          type="text"
+                          className="form-control-plaintext"
+                          name="nickname"
+                          placeholder="Nickname"
+                          value={this.state.nickname}
+                          onChange={this.handleInputChange}
+                        />
+                        <input
+                          type="text"
+                          className="form-control-plaintext"
+                          placeholder="Room ID"
+                          name="room"
+                          value={this.state.room}
+                          onChange={this.handleInputChange}
+                        />
+                        <a
+                          className="btn btn--loginApp-link"
+                          href={`${guestEndpoint}?client_id=${guestId}&redirect_uri=${guestUri}&scope=${guestScopes.join(
+                            "%20"
+                          )}&response_type=token&show_dialog=true`}
+                          onClick={this.handleModalSubmit}
+                        ></a>
+                      </div>
+                    </form>
+                  </Guest>
                 )}
               </div>
             </div>
@@ -313,15 +425,36 @@ class App extends Component {
           {/* Player */}
           {/* {this.state.token && (
             <Player
+              token={this.state.token}
               item={this.state.item}
               is_playing={this.state.is_playing}
               progress_ms={this.progress_ms}
             />
           )} */}
-          <Playlist
-            currentRoom={this.state.room}
-            songs={this.state.songArray}
-          />
+
+          {this.state.token && (
+            <Playlist>
+              {this.state.songArray.map(song => (
+                <div>
+                  <tr>
+                    <td>{song.trackName}</td>
+                    <td>{song.artistName}</td>
+                    <td>{song.albumName}</td>
+                    <td>{song.userName}</td>
+                    <td>
+                      <button
+                        onClick={() => this.setCurrentPlayingSong(song.trackId)}
+                      >
+                        Nice
+                      </button>
+                    </td>
+                  </tr>
+                </div>
+              ))}
+            </Playlist>
+          )}
+          <AltPlayer token={this.state.token} nickname={this.state.nickname} />
+          {/* <SpotifyPlayer uri="spotify:album:1TIUsv8qmYLpBEhvmBmyBk" /> */}
         </header>
       </div>
     );
