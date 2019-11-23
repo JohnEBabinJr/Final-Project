@@ -264,10 +264,6 @@ class App extends Component {
   };
 
   render() {
-    const { username, nickname, roomId } = this.state;
-    const isEnabled =
-      nickname.length > 0 && roomId.length > 0 && username.length > 0;
-
     const github = (
       <a href="https://github.com/JohnEBabinJr/final-project/" className="mr-1">
         <i className="fab fa-github fa-1x"></i>
@@ -296,8 +292,6 @@ class App extends Component {
         <i class="fas fa-toilet"></i>
       </a>
     );
-
-    const props = {};
 
     return (
       // Put things that you want to appear on every page vvv
@@ -381,7 +375,6 @@ class App extends Component {
                     {" "}
                     <form>
                       <input
-                        disabled={isEnabled}
                         type="text"
                         placeholder="Nickname"
                         name="nickname"
@@ -472,33 +465,24 @@ class App extends Component {
           {this.state.token && (
             <Playlist>
               {this.state.songArray.map(song => (
-                <div class="container">
-                  <div class="row">
-                    <div class="col">
-                      <table>
-                        <tbody>
-                          <tr>
-                            <th scope="row">{}</th>
-                            <td>{song.trackName}</td>
-                            <td>{song.artistName}</td>
-                            <td>{song.albumName}</td>
-                            <td>{song.userName}</td>
-                            <td>
-                              {" "}
-                              <button
-                                onClick={() =>
-                                  this.setCurrentPlayingSong(song.trackId)
-                                }
-                              >
-                                <i class="fas fa-play"></i>
-                              </button>
-                            </td>
-                          </tr>
-                        </tbody>
-                      </table>
-                    </div>
-                  </div>
-                </div>
+                <tbody>
+                  <tr>
+                    <th scope="row">{song.id}</th>
+                    <td>{song.trackName}</td>
+                    <td>{song.artistName}</td>
+                    <td>{song.albumName}</td>
+                    <td>{song.userName}</td>
+                    <td>
+                      {" "}
+                      <button
+                        id="currentSong"
+                        onClick={() => this.setCurrentPlayingSong(song.trackId)}
+                      >
+                        <i class="fas fa-play"></i>
+                      </button>
+                    </td>
+                  </tr>
+                </tbody>
               ))}
             </Playlist>
           )}
