@@ -4,7 +4,7 @@ import "./App.css";
 import hash from "./hash";
 import logo from "./spotify-icon.png";
 import Player from "./Player";
-//import altPlayer from "./components/Player/index";
+import AltPlayer from "./components/Player/index";
 import Playlist from "./components/Playlist/index";
 import Host from "./Host";
 import Guest from "./Guest";
@@ -38,7 +38,7 @@ class App extends Component {
       tempTrack: "",
       tempArtist: "",
       tempAlbum: "",
-      token: null,
+      token: "",
       item: {
         album: {
           images: [{ url: "" }]
@@ -244,13 +244,13 @@ class App extends Component {
 
   render() {
     const github = (
-      <a href="https://github.com/JohnEBabinJr/final-project/" class="mr-1">
-        <i class="fab fa-github fa-1x"></i>
+      <a href="https://github.com/JohnEBabinJr/final-project/" className="mr-1">
+        <i className="fab fa-github fa-1x"></i>
       </a>
     );
 
     const aboutUs = (
-      <a href="/about" class="ml-2">
+      <a href="/about" className="ml-2">
         About Us
       </a>
     );
@@ -262,7 +262,7 @@ class App extends Component {
 
     const home = (
       <a href="/">
-        <i class="fas fa-home"></i>
+        <i className="fas fa-home"></i>
       </a>
     );
 
@@ -305,12 +305,12 @@ class App extends Component {
             </form>
           )}
           {!this.state.token && (
-            <div class="container">
+            <div className="container">
               <img src={logo} className="App-logo" alt="logo" />
-              <div class="row">
-                <div class="col col-5 mx-auto" id="app">
-                  <h1>Car-OK</h1>
-                  <p class="lead mx-3">
+              <div className="row">
+                <div className="col col-5 mx-auto" id="app">
+                  <h1>Car - a - OK</h1>
+                  <p className="lead mx-3">
                     Collaborate on the ultimate roadtrip playlist with your
                     friends using Spotify. Share the link, queue up songs, and
                     export your playlist to relive the memories.
@@ -319,9 +319,9 @@ class App extends Component {
               </div>
             </div>
           )}
-          <div class="container" id="buttonContainer">
-            <div class="row">
-              <div class="col">
+          <div className="container" id="buttonContainer">
+            <div className="row">
+              <div className="col">
                 {" "}
                 {/* Host Login */}
                 {!this.state.token && (
@@ -351,20 +351,20 @@ class App extends Component {
                 )}
               </div>
 
-              <div class="col">
+              <div className="col">
                 {" "}
                 {/* Guest Login */}
                 {!this.state.token && (
                   <Guest>
                     {" "}
-                    <form class="form-inline">
-                      <div class="form-group mb-2">
-                        <label for="nickname" class="sr-only">
+                    <form className="form-inline">
+                      <div className="form-group mb-2">
+                        <label for="nickname" className="sr-only">
                           nickname
                         </label>
                         <input
                           type="text"
-                          class="form-control-plaintext"
+                          className="form-control-plaintext"
                           name="nickname"
                           placeholder="Nickname"
                           value={this.state.nickname}
@@ -372,7 +372,7 @@ class App extends Component {
                         />
                         <input
                           type="text"
-                          class="form-control-plaintext"
+                          className="form-control-plaintext"
                           placeholder="Room ID"
                           name="room"
                           value={this.state.room}
@@ -404,6 +404,7 @@ class App extends Component {
               progress_ms={this.progress_ms}
             />
           )} */}
+
           {this.state.token && (
             <Playlist>
               {this.state.songArray.map(song => (
@@ -416,19 +417,17 @@ class App extends Component {
                     <td>
                       <button
                         onClick={() => this.setCurrentPlayingSong(song.trackId)}
-                      ></button>
+                      >
+                        Nice
+                      </button>
                     </td>
                   </tr>
                 </div>
               ))}
             </Playlist>
           )}
-          {/* <altPlayer></altPlayer> */}
-
-          {/* <SpotifyPlayer
-            uri="spotify:album:1TIUsv8qmYLpBEhvmBmyBk"
-           
-          /> */}
+          <AltPlayer token={this.state.token} />
+          {/* <SpotifyPlayer uri="spotify:album:1TIUsv8qmYLpBEhvmBmyBk" /> */}
         </header>
       </div>
     );

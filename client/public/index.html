@@ -58,7 +58,7 @@
       rel="stylesheet"
     />
 
-    <title>Car-oling</title>
+    <title>Car-a-OK</title>
   </head>
 
   <body>
@@ -75,5 +75,11 @@
       To begin the development, run `npm start` or `yarn start`.
       To create a production bundle, use `npm run build` or `yarn build`.
     -->
+    <script src="https://sdk.scdn.co/spotify-player.js"></script>
+    <script>
+      window.onSpotifyWebPlaybackSDKReady = () => {
+        window.Spotify = Spotify;
+      };
+    </script>
   </body>
 </html>
