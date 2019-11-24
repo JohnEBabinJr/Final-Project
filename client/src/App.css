@@ -199,6 +199,6 @@ form input {
 }
 
 #currentSong {
-  color: #333;
-  border: 1px solid #1db954;
+  font-size: 1vw;
+  border: 0px solid transparent;
 }
