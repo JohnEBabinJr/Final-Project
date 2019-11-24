@@ -255,10 +255,6 @@ class App extends Component {
   };
 
   render() {
-    const { username, nickname, roomId } = this.state;
-    const isEnabled =
-      nickname.length > 0 && roomId.length > 0 && username.length > 0;
-
     const github = (
       <a href="https://github.com/JohnEBabinJr/final-project/" className="mr-1">
         <i className="fab fa-github fa-1x"></i>
@@ -351,7 +347,7 @@ class App extends Component {
               <div className="row">
                 <div className="col col-5 mx-auto" id="app">
                   <h1>
-                    Car - <i class="fas fa-road"></i> - OK
+                    Car<i class="fas fa-road"></i>OK
                   </h1>
                   <p className="lead mx-3">
                     Collaborate on the ultimate roadtrip playlist with your
@@ -372,7 +368,6 @@ class App extends Component {
                     {" "}
                     <form>
                       <input
-                        disabled={isEnabled}
                         type="text"
                         placeholder="Nickname"
                         name="nickname"
@@ -404,7 +399,7 @@ class App extends Component {
                 {!this.state.token && (
                   <Guest>
                     {" "}
-                    <form className="form-inline">
+                    <form className="form">
                       <div className="form-group mb-2">
                         <label for="nickname" className="sr-only">
                           nickname
@@ -433,15 +428,22 @@ class App extends Component {
                         <div class="invalid-feedback">
                           Please enter a Room ID.
                         </div>
-                        <a
-                          className="btn btn--loginApp-link"
-                          href={`${guestEndpoint}?client_id=${guestId}&redirect_uri=${guestUri}&scope=${guestScopes.join(
-                            "%20"
-                          )}&response_type=token&show_dialog=true`}
-                          onClick={this.handleModalSubmit}
-                        >
-                          Go
-                        </a>
+                        <div class="container">
+                          <div class="row">
+                            <div class="col">
+                              <a
+                                id="goButton"
+                                className="btn btn--loginApp-link"
+                                href={`${authEndpoint}?client_id=${clientId}&redirect_uri=${redirectUri}&scope=${scopes.join(
+                                  "%20"
+                                )}&response_type=token&show_dialog=true`}
+                                onClick={this.handleModalSubmit}
+                              >
+                                Go
+                              </a>
+                            </div>
+                          </div>
+                        </div>
                       </div>
                     </form>
                   </Guest>
@@ -477,6 +479,7 @@ class App extends Component {
                             <td>
                               {" "}
                               <button
+                                id="currentSong"
                                 onClick={() =>
                                   this.setCurrentPlayingSong(song.trackId)
                                 }
