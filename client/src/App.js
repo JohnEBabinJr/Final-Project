@@ -472,34 +472,24 @@ class App extends Component {
           {this.state.token && (
             <Playlist>
               {this.state.songArray.map(song => (
-                <div class="container">
-                  <div class="row">
-                    <div class="col">
-                      <table>
-                        <tbody>
-                          <tr>
-                            <th scope="row">{}</th>
-                            <td>{song.trackName}</td>
-                            <td>{song.artistName}</td>
-                            <td>{song.albumName}</td>
-                            <td>{song.userName}</td>
-                            <td>
-                              {" "}
-                              <button
-                                id="currentSong"
-                                onClick={() =>
-                                  this.setCurrentPlayingSong(song.trackId)
-                                }
-                              >
-                                <i class="fas fa-play"></i>
-                              </button>
-                            </td>
-                          </tr>
-                        </tbody>
-                      </table>
-                    </div>
-                  </div>
-                </div>
+                <tbody>
+                  <tr>
+                    <th scope="row">{song.id}</th>
+                    <td>{song.trackName}</td>
+                    <td>{song.artistName}</td>
+                    <td>{song.albumName}</td>
+                    <td>{song.userName}</td>
+                    <td>
+                      {" "}
+                      <button
+                        id="currentSong"
+                        onClick={() => this.setCurrentPlayingSong(song.trackId)}
+                      >
+                        <i class="fas fa-play"></i>
+                      </button>
+                    </td>
+                  </tr>
+                </tbody>
               ))}
             </Playlist>
           )}
