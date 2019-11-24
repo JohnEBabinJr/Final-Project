@@ -202,3 +202,9 @@ form input {
 .nickname {
   color: #1DB954;
 }
+
+#currentSong {
+  font-size: 1vw;
+  border: 0px solid transparent;
+
+}
