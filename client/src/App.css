@@ -50,7 +50,7 @@ body {
 body {
   background-color: #282c34;
   color: #eee;
-  font-family: 'Lato', Helvetica, sans-serif;
+  font-family: "Lato", Helvetica, sans-serif;
   font-size: 3vmin;
 }
 
@@ -61,10 +61,10 @@ body {
 /** Buttons **/
 
 .btn,
-Button {
+button {
   background-color: transparent;
   border-radius: 2em;
-  border: 2px solid #1DB954;
+  border: 2px solid #1db954;
   color: white;
   cursor: pointer;
   font-size: 3vmin;
@@ -72,15 +72,15 @@ Button {
   transition: all 0.25s ease;
 }
 
-Button {
+button {
   font-size: 1.5vw;
   margin-left: 10px;
   padding: 7px 30px;
 }
 
 .btn:hover,
-Button:hover {
-  background: #1DB954;
+button:hover {
+  background: #1db954;
   color: #333;
 }
 
@@ -116,9 +116,8 @@ Button:hover {
   flex: 1;
 }
 
-
 #buttonContainer {
-  width: 50%
+  width: 50%;
 }
 
 /* .userButton {
@@ -131,58 +130,54 @@ Button:hover {
 a {
   text-decoration: none;
   color: white;
-
-
 }
 
 a:hover {
   text-decoration: none;
-  color: #1DB954;
+  color: #1db954;
 }
 
 h1 {
   font-size: 4vw;
-  font-family: 'Staatliches';
-
+  font-family: "Staatliches";
 }
 
 h2 {
   font-size: 3vw;
-  font-family: 'Lato';
+  font-family: "Lato";
   font-weight: 700;
 }
 
 /* Playlist Styles */
 
 form input {
-  font-family: 'Lato';
+  font-family: "Lato";
   margin: 5px;
 }
 
 .Player button {
   border: 1px solid transparent;
-  background-color: #1DB954;
+  background-color: #1db954;
   font-size: 1.5vw;
   margin: 70px 10px 10px;
 }
 
-
 #spacer {
-  background-color: #1DB954;
+  background-color: #1db954;
 }
 
 #playlistTable {
-  border: 1px solid #1DB954;
+  border: 1px solid #1db954;
   margin-top: 20px;
 }
 
-#playlistTable>thead>tr>th {
-  border: 1px solid #1DB954;
-  background-color: rgba(29, 185, 84, 0.6)
+#playlistTable > thead > tr > th {
+  border: 1px solid #1db954;
+  background-color: rgba(29, 185, 84, 0.6);
 }
 
-#playlistTable>tbody>tr>td {
-  border: 1px solid #1DB954;
+#playlistTable > tbody > tr > td {
+  border: 1px solid #1db954;
   font-size: 1.5vw;
   font-weight: 400;
 }
@@ -192,19 +187,18 @@ form input {
 }
 
 .roomID {
-  font-family: 'lato';
+  font-family: "lato";
   font-weight: 700;
   font-size: 3vw;
-  color: #1DB954;
+  color: #1db954;
   letter-spacing: 7px;
 }
 
 .nickname {
-  color: #1DB954;
+  color: #1db954;
 }
 
 #currentSong {
   font-size: 1vw;
   border: 0px solid transparent;
-
 }

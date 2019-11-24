@@ -19,14 +19,15 @@ const Playlist = props => {
                 <th scope="col">Song</th>
                 <th scope="col">Artist</th>
                 <th scope="col">Album</th>
-                <th scope="col">Added</th>
+                <th scope="col">Added by</th>
+                <th scope="col">Status</th>
               </tr>
             </thead>
+
+            {props.children}
           </table>
         </div>
       </div>
-
-      <div>{props.children}</div>
     </div>
   );
 };

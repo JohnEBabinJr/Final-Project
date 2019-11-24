@@ -181,26 +181,33 @@ class Player extends React.Component {
     } = this.state;
 
     return (
-      <div className="Player">
-        <p>
-          <button class="btn-circle" onClick={() => this.onPrevClick()}>
-            <i class="fas fa-step-backward"></i>
-          </button>
-          <button onClick={() => this.onPlayClick()}>
-            {playing ? (
-              <i class="fas fa-pause"></i>
-            ) : (
-              <i class="fas fa-play"></i>
-            )}
-          </button>
-          <button onClick={() => this.onNextClick()}>
-            {" "}
-            <i class="fas fa-step-forward"></i>{" "}
-          </button>
-        </p>
+      <div>
+        {loggedIn ? (
+          <div className="Player">
+            <div className="Player-header">
+              <h2>Now Playing</h2>
+            </div>
+
+            <div>
+              <p>Artist: {artistName}</p>
+              <p>Track: {trackName}</p>
+              <p>Album: {albumName}</p>
+              <p>
+                <button onClick={() => this.onPrevClick()}> Prev </button>
+                <button onClick={() => this.onPlayClick()}>
+                  {playing ? "Pause" : "Play"}
+                </button>
+                <button onClick={() => this.onNextClick()}> Next </button>
+              </p>
+            </div>
+          </div>
+        ) : (
+          <div>
+            <button onClick={() => this.handleLogin()}>Open Player</button>
+          </div>
+        )}
       </div>
     );
   }
 }
-
 export default Player;
