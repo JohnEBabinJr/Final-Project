@@ -2,12 +2,6 @@ import "./Room.css";
 import React from "react";
 import Modal from "react-modal";
 import Button from "react-bootstrap/Button";
-import {
-  authEndpoint,
-  clientId,
-  redirectUri,
-  scopes
-} from "./config_example.js";
 
 class Host extends React.Component {
   constructor(props) {

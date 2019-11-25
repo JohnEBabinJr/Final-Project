@@ -48,6 +48,24 @@ class Player extends React.Component {
     }
   }
 
+  play = ({
+    spotify_uri,
+    playerInstance: {
+      _options: { getOAuthToken, id }
+    }
+  }) => {
+    getOAuthToken(access_token => {
+      fetch(`https://api.spotify.com/v1/me/player/play?device_id=${id}`, {
+        method: "PUT",
+        body: JSON.stringify({ uris: [spotify_uri] }),
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${access_token}`
+        }
+      });
+    });
+  };
+
   onStateChanged(state) {
     // if we're no longer listening to music, we'll get a null state.
     if (state !== null) {
@@ -143,6 +161,10 @@ class Player extends React.Component {
   }
 
   componentDidMount() {
+    // this.play({
+    //   playerInstance: new window.Spotify.Player({ name: "pls" }),
+    //   spotify_uri: "spotify:track:7xGfFoTpQ2E7fRF5lN10tr"
+    // });
     // const play = ({
     //   spotify_uri,
     //   playerInstance: {

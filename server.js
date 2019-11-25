@@ -4,7 +4,7 @@ const PORT = process.env.PORT || 3001;
 const app = express();
 const mongoose = require("mongoose");
 const autoIncrement = require("mongoose-auto-increment");
-//const Hashids = require("hashids/cjs");
+const Hashids = require("hashids/cjs");
 
 const routes = require("./routes");
 
