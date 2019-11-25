@@ -1,3 +1,11 @@
+.SpotifyPlayer {
+  width: 89%;
+  margin: auto;
+  margin-top: 20px;
+  margin-bottom: -20px;
+  height: 100px;
+}
+
 .App {
   text-align: center;
 }
@@ -200,5 +208,6 @@ form input {
 
 #currentSong {
   font-size: 1vw;
-  border: 0px solid transparent;
+  color: #333;
+  border: 1px solid #1db954;
 }

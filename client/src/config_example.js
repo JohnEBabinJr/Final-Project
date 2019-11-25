@@ -5,7 +5,7 @@ export const authEndpoint = "https://accounts.spotify.com/authorize";
 export const clientId = "749b6ea423c24fef905f41108b8c3a3f";
 export const clientSecret = "e42d147ddad74c2ab3cee9af552aac39";
 export const redirectUri = "http://car-a-ok.herokuapp.com";
-//"http://localhost:3000/";
+
 export const scopes = [
   "user-top-read",
   "user-read-email",

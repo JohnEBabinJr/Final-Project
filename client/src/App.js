@@ -3,13 +3,11 @@ import * as $ from "jquery";
 import "./App.css";
 import hash from "./hash";
 import logo from "./spotify-icon.png";
-import Player from "./Player";
-import AltPlayer from "./components/Player/index";
+//import AltPlayer from "./components/Player/index";
 import Playlist from "./components/Playlist/index";
 import Host from "./Host";
 import Guest from "./Guest";
 import API from "./utils/API";
-import ReactDOM from "react-dom";
 import SpotifyPlayer from "react-spotify-player";
 import ChangeColorFunction from "./components/Colorchange";
 import {
@@ -25,6 +23,8 @@ import {
   guestScopes
 } from "./guest_config.js";
 import { ENETUNREACH } from "constants";
+import Hashids from "hashids/cjs";
+
 // Identify if host or guest
 // Full search
 // Playlist
@@ -65,14 +65,24 @@ class App extends Component {
         token: _token
       });
       this.makeRoom();
+
       setTimeout(this.getStuffFromDB, 500);
     }
   }
-  makeRoom = () => {
-    // var hashids = new Hashids("this is my salt"),
-    //   id = hashids.encode(1, 2, 3),
-    //   numbers = hashids.decode(id);
 
+  hashId = () => {
+    var hashids = new Hashids(
+        Math.floor(Math.random() * Math.floor(1000)).toString()
+      ),
+      id = hashids.encode(3, 2),
+      numbers = hashids.decode(id);
+
+    console.log(id);
+
+    return id;
+  };
+
+  makeRoom = () => {
     var roomId;
     var nick = sessionStorage.getItem("nickname");
 
@@ -86,16 +96,16 @@ class App extends Component {
       sessionStorage.removeItem("room");
       return this.state.room;
     } else {
-      roomId = "";
-      var Arr = [];
-      function getRandomInt() {
-        return Math.floor(Math.random() * Math.floor(10));
-      }
-      for (var i = 0; i < 4; i++) {
-        Arr.push(getRandomInt());
-      }
+      roomId = this.hashId();
+      // var Arr = [];
+      // function getRandomInt() {
+      //   return Math.floor(Math.random() * Math.floor(10));
+      // }
+      // for (var i = 0; i < 4; i++) {
+      //   Arr.push(getRandomInt());
+      // }
 
-      roomId = Arr.join("");
+      // roomId = Arr.join("");
 
       console.log(roomId);
       this.setState({
@@ -117,6 +127,7 @@ class App extends Component {
     });
   };
 
+  //unused function
   getCurrentlyPlaying(token) {
     // Make a call using the token
     $.ajax({
@@ -136,6 +147,7 @@ class App extends Component {
     });
   }
 
+  //uses user input to query spotify api, posts song info to db, calls it back from db to display
   getSong(token) {
     var query = "";
     if (this.state.tempTrack && this.state.tempArtist && this.state.tempAlbum) {
@@ -179,7 +191,7 @@ class App extends Component {
     } else {
       alert("Must enter at least one value!");
     }
-
+    var tempId = "";
     $.ajax({
       url: query,
 
@@ -190,6 +202,7 @@ class App extends Component {
       },
       success: data => {
         console.log("data", data);
+        tempId = data.tracks.items[0].id;
         var nickName = sessionStorage.getItem("nickname");
         API.saveTrack({
           roomId: this.state.room,
@@ -200,9 +213,12 @@ class App extends Component {
           albumCover: data.tracks.items[0].album.images[1].url,
           userName: nickName
         });
-        console.log(this.state.nickname);
       }
-    }).then(setTimeout(this.getStuffFromDB, 1000));
+    })
+      .then(setTimeout(this.getStuffFromDB, 1000))
+      .then(() => {
+        this.setCurrentPlayingSong(tempId); //temporary fix to present, since player isnt working
+      });
   }
 
   setCurrentPlayingSong(trackId) {
@@ -227,6 +243,7 @@ class App extends Component {
     this.setState({ nextToPlay: secondTemp });
   }
 
+  //currently unused funct
   handleTrack(data) {
     console.log("handletrack");
     API.saveTrack({
@@ -264,6 +281,13 @@ class App extends Component {
   };
 
   render() {
+    const size = {
+      justifyContent: "center",
+      border: "10%",
+      width: "90%",
+      marginBottom: "10px"
+    };
+
     const github = (
       <a href="https://github.com/JohnEBabinJr/final-project/" className="mr-1">
         <i className="fab fa-github fa-1x"></i>
@@ -354,7 +378,7 @@ class App extends Component {
               <div className="row">
                 <div className="col col-5 mx-auto" id="app">
                   <h1>
-                    Car<i class="fas fa-road"></i>OK
+                    Car - <i class="fas fa-road"></i> - OK
                   </h1>
                   <p className="lead mx-3">
                     Collaborate on the ultimate roadtrip playlist with your
@@ -441,7 +465,7 @@ class App extends Component {
                               <a
                                 id="goButton"
                                 className="btn btn--loginApp-link"
-                                href={`${authEndpoint}?client_id=${clientId}&redirect_uri=${redirectUri}&scope=${scopes.join(
+                                href={`${guestEndpoint}?client_id=${guestId}&redirect_uri=${guestUri}&scope=${guestScopes.join(
                                   "%20"
                                 )}&response_type=token&show_dialog=true`}
                                 onClick={this.handleModalSubmit}
@@ -469,6 +493,15 @@ class App extends Component {
             />
           )} */}
 
+          {this.state.token && this.state.currentlyPlaying && (
+            <SpotifyPlayer
+              uri={"spotify:track:" + this.state.currentlyPlaying}
+              // size={size}
+              view="list"
+              theme="black"
+            />
+          )}
+
           {this.state.token && (
             <Playlist>
               {this.state.songArray.map(song => (
@@ -493,8 +526,7 @@ class App extends Component {
               ))}
             </Playlist>
           )}
-          <AltPlayer token={this.state.token} nickname={this.state.nickname} />
-          {/* <SpotifyPlayer uri="spotify:album:1TIUsv8qmYLpBEhvmBmyBk" /> */}
+          {/* <AltPlayer token={this.state.token} nickname={this.state.nickname} /> */}
         </header>
       </div>
     );

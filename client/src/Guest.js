@@ -2,12 +2,6 @@ import "./Room.css";
 import React from "react";
 import Modal from "react-modal";
 import Button from "react-bootstrap/Button";
-import {
-  guestEndpoint,
-  guestId,
-  guestUri,
-  guestScopes
-} from "./guest_config.js";
 
 class Guest extends React.Component {
   constructor(props) {
