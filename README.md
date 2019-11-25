@@ -6,11 +6,9 @@ Team: Lyn Tan, John Babin, Connor Paxton, Fiona Zhou
 
 Hosted using Heroku: http://car-a-ok.herokuapp.com/
 
-[hosted AR randomizer add-on here?]
+Project Repository: https://github.com/JohnEBabinJr/Final-Project 
 
-https://github.com/JohnEBabinJr/Final-Project 
-
-*To run outside of hosted version via downloaded or cloned Github, please note that it will require setup of own database to save playlists to and npm install. 
+*To run outside of hosted version via downloaded or cloned Git repo, please note that it will require setup of own database to save playlists to and npm install. 
 
 # Car-A-OK - "Collaborate on the ultimate roadtrip playlist with your friends using Spotify. Share the link, queue up songs, and export your playlist to relive the memories."
 
@@ -18,11 +16,17 @@ Car-a-ok (rebranded, thanks Tesla) is a Spotify playlist creation application th
 
 *Before creating the playlist, please sign into an existing Spotify account.
 
-[gif of the front page]
+![Image](https://raw.githubusercontent.com/JohnEBabinJr/Final-Project/master/readme-img/main.png)
 
-[gif of the user entry and example codes]
+![Image](https://raw.githubusercontent.com/JohnEBabinJr/Final-Project/master/readme-img/login.jpg)
 
-[gif of the playlist creation]
+![Image](https://raw.githubusercontent.com/JohnEBabinJr/Final-Project/master/readme-img/permissions.png)
+
+![Image](https://raw.githubusercontent.com/JohnEBabinJr/Final-Project/master/readme-img/username.png)
+
+![Image](https://raw.githubusercontent.com/JohnEBabinJr/Final-Project/master/readme-img/room.jpg)
+
+![Image](https://raw.githubusercontent.com/JohnEBabinJr/Final-Project/master/readme-img/jon.png)
 
 ## Other Use Cases
 
@@ -45,3 +49,13 @@ The app is hosted on Heroku and was scaffolded using create-react-app. This is o
 -Eslint configuration for identifying and reporting on patterns found in ECMAScript/JavaScript code, with the goal of making code more consistent and avoiding bugs.
 
 -Node.js+Mongodb for back-end, database functionality, and object modeling.
+
+## Contact Us
+
+-Carolyn Tan: https://github.com/lyntan
+
+-John Babin: https://github.com/JohnEBabinJr
+
+-Connor Paxton: https://github.com/hippopattymus/
+
+-Fiona Zhou: https://github.com/fxtzhou
